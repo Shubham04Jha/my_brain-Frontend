@@ -4,24 +4,32 @@ const variants = {
     primary:'',
     secondary:' rounded-md ',
     circular: 'rounded-full aspect-square',
-    square:'aspect-square rounded-2xl'
+    square:'aspect-square rounded-xl'
 }
 
 const sizes = {
     xs:'w-4',
-    sm: 'w-8  hover:ring-4',
-    md: 'w-16 py-2 px-4 hover:ring-4 ',
-    lg:'w-32 py-2 px-4 hover:ring-4',
-    xl:'w-48 py-4 px-8 hover:ring-4 ',
-    '2xl':'w-64 py-8 px-16 hover:ring-4'
+    sm: 'min-w-8 px-1 hover:ring-4 outline-1',
+    md: 'min-w-16 hover:ring-4 border-1 outline-1',
+    lg:'min-w-32 py-2 px-4 hover:ring-4 border-2 outline-2',
+    xl:'min-w-48 py-4 px-8 hover:ring-4 border-2 outline-2',
+    '2xl':'w-64 py-8 px-16 hover:ring-4 border-4 outline-4'
 }
 
 const buttonTextStyle = {
-    xs:'font-semibold text-sm',
-    sm: 'font-semibold text-md',
-    md: 'font-semibold text-lg',
-    lg:'font-semibold text-xl',
-    xl:'font-bold text-2xl'
+    xs:'font-semibold text-xs',
+    sm: 'font-semibold text-sm',
+    md: 'font-semibold text-md',
+    lg:'font-semibold text-4xl',
+    xl:'font-bold text-xl'
+}
+
+const IconSize = {
+    xs:'w-2',
+    sm:'w-4',
+    md:'w-8',
+    lg:'w-16',
+    xl:'w-32'
 }
 
 interface ButtonProps{
@@ -45,20 +53,28 @@ export const Button = ({
     return (
         <button
             onClick={onClick}
-            className={`
+            className={` flex gap-2
                 dark:bg-secondary-black bg-secondary-white 
-                outline-2  dark:outline-white outline-black
-                border-2 dark:border-black border-white
+                dark:outline-white outline-black
+                dark:border-accent-black border-accent-white
                 hover:ring-border-subtle
                 ${variants[variant]} ${sizes[size]}`}
         >
-            {startIcon}
+            {startIcon&&
+            <div className={`${IconSize[size]} align-center mx-auto`}>
+                {startIcon}
+            </div>
+            }
             {text&&
-            <div className={`truncate ${buttonTextStyle[size]}`}>
+            <div className={` ${buttonTextStyle[size]} py-2`}>
                 {text}
             </div>
             }
-            {endIcon}
+            {endIcon&&
+            <div className={`${IconSize[size]} align-center mx-auto`}>
+                {endIcon}
+            </div>
+            }
         </button>
     )
 }

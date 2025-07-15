@@ -6,14 +6,13 @@ function App() {
 
   return (
     <div className='dark
-        flex items-center justify-around
+        
         dark:text-text-white text-text-black 
         dark:bg-background-black bg-background-white
-        my-auto min-h-200'>
-      <ProfileCard variant='folded' username={'shubham@123'}/>
-      <ProfileCard variant='folded' username={'shubham'}/>
+        my-auto h-screen
+        px-10 py-2'>
+      <ProfileCard variant='extended' username={'shubham@123'}/>
     </div>
-
   )
 }
 
