@@ -25,3 +25,6 @@ dist-ssr
 
 #envs
 *.env
+
+#trial and error:
+design_trials
