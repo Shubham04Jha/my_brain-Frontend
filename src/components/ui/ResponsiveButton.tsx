@@ -9,6 +9,7 @@ interface ButtonProps{
     endIcon? : ReactNode;
     width?: string;
     padding?: string;
+    showFull?: boolean;
 }
 
 const IconSize = {
@@ -33,13 +34,14 @@ export const ResponsiveButton = ({
     endIcon,
     width,
     padding,
+    showFull
 }: ButtonProps)=>{
     const {isMobile} = useResponsive();
     return(
         <div className={`${defaultStyle} ${width} ${padding} `}>
             <div className="justify-center flex gap-4 items-center">
                 {startIcon&&<div className={`${IconSize[size]}`}>{startIcon}</div>}
-                {!isMobile&&
+                {(!isMobile||showFull)&&
                 <div className={` flex items-center -mt-1 ${TextSize[size]}`}>
                     {text}
                 </div>}

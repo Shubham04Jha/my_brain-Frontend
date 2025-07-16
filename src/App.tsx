@@ -14,7 +14,7 @@ function App() {
         h-screen
         px-10 py-2'>
       {/* <ProfileCard variant='extended' username={'shubham@123'}/> */}
-      <ResponsiveButton text="Share Brain" size='md' padding='px-4 py-2' startIcon={shareSvg}/>
+      <ResponsiveButton text="Share Brain" size='md' padding='px-4 py-2' startIcon={shareSvg} showFull/>
     </div>
   )
 }
