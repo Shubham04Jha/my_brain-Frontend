@@ -9,7 +9,7 @@ import { ContentFolded } from './components/ui/ContentFolded';
 function App() {
 
   return (
-    <div className='
+    <div className='dark
         dark:text-text-white text-text-black 
         dark:bg-background-black bg-background-white
         min-h-screen

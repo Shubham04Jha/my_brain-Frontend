@@ -16,7 +16,7 @@ outline-2 dark:outline-accent-black outline-accent-white w-full
 aspect-square
 lg:rounded-xl rounded-lg
 md:p-4 p-2 space-y-4 flex-col 
-overflow-y-auto
+overflow-y-auto scrollbar scrollbar-thumb-gray-500 scrollbar-track-transparent scrollbar-track-sky-300
 `
 
 export const ContentFolded = ({

@@ -2,6 +2,8 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@plugin 'tailwind-scrollbar';
+
 @theme {
 
     /* dark mode */
