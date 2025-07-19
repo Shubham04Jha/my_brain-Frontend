@@ -25,7 +25,7 @@ function App() {
         <div className={`${sideBarOpen?'col-span-2':''} lg:static absolute `}>
           {<SideBar extended={sideBarOpen} onClick={()=>setSideBarOpen(b=>!b)}/>}
         </div>
-        <div className={`lg:${sideBarOpen?'col-start-3':''} col-span-full grid grid-cols-12 lg:gap-8 gap-4 
+        <div className={`${sideBarOpen?'lg:col-start-3':''} col-start-0 col-span-full grid grid-cols-12 lg:gap-8 gap-4 
         pl-8 pr-2 py-2
         overflow-y-auto h-screen scrollbar scrollbar-thumb-gray-500 scrollbar-track-transparent scrollbar-track-sky-300
         `}>
