@@ -37,7 +37,7 @@ export const ContentExpanded = ({
             <p>{new Date(createdAt).toDateString()}</p>
             <div className="flex justify-center gap-4 items-center ">
                 <p className={`p-2 text-4xl dark:outline-accent-black outline-accent-white rounded-md items-center `}>{title}</p>
-                {isOwner&&<div onClick={()=>setVisible(b=>!b)} className=""><Eye width="w-8 -mb-2" isPublic={visible} /></div>}
+                {isOwner&&<div onClick={()=>setVisible(b=>!b)} className="hover:cursor-pointer"><Eye width="w-8 -mb-2" isPublic={visible} /></div>}
             </div>
             <div className="outline-1 dark:outline-accent-black outline-accent-white p-2 rounded-md flex flex-col">
                 {editable?
@@ -48,7 +48,7 @@ export const ContentExpanded = ({
                             onChange={(e) => setText(e.target.value)}
                         />
                         <div className=" outline-1 dark:outline-accent-black outline-accent-white p-2 rounded-md inline-flex ml-auto
-                            aspect-square"
+                            aspect-square hover:cursor-pointer"
                             onClick={()=>setEditable(false)}>{<Check width="w-4"/>}
                         </div>
                     </>
@@ -57,6 +57,7 @@ export const ContentExpanded = ({
                     <p className=" h-50 whitespace-pre-line">{text}</p>
                     {isOwner&&
                     <div className=" outline-1 dark:outline-accent-black outline-accent-white p-2 rounded-md inline-flex ml-auto
+                        hover:cursor-pointer
                         aspect-square"
                         onClick={()=>setEditable(true)}>{<Edit width="w-6"/>}
                     </div>}
