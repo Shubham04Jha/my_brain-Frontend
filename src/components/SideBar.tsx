@@ -20,7 +20,8 @@ export const SideBar = ({extended=true, onClick}:SideBarProps)=>{
         extended?
             <div className={`${outerStyle} `}>
                 <div className="lg:static absolute w-full">
-                    <div className="w-8 absolute bg-pink-300 right-1 top-1 
+                    <div className="w-8 absolute dark:bg-background-black bg-background-white text-red-400
+                     right-1 top-1 
                     hover:dark:bg-background-black hover:bg-background-white hover:cursor-pointer hover:outline-1 
                     hover:cursor-pointer hover:outline-1 dark:outline-accent-black outline-accent-white
                     rounded-md p-1" onClick={onClick}><SideBarButton extended={extended}/></div>
