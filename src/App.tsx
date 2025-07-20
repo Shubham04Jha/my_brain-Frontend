@@ -7,13 +7,15 @@ import { ContentExpanded } from './components/ui/ContentExpanded';
 import { ContentFolded } from './components/ui/ContentFolded';
 import { SideBar } from './components/SideBar';
 import { useState } from 'react';
+import { PlusIcon } from './assets/icons/plux';
 
 function App() {
   const [sideBarOpen,setSideBarOpen] = useState(true);
+  const [isOwner,setIsOwner] = useState(true);
   return (
     <div className='dark
         dark:text-text-white text-text-black 
-        dark:bg-background-black bg-background-white px-2
+        dark:bg-background-black bg-background-white px-2 h-screen
         '>
       {/* <ProfileCard variant='extended' username={'shubham@123'}/> */}
       {/* <ResponsiveButton text="Share Brain" size='md' padding='px-4 py-2' startIcon={shareSvg}/> */}
@@ -22,9 +24,11 @@ function App() {
       isPublic isOwner
       /> */}
       <div className='grid grid-cols-12 relative'>
+
         <div className={`${sideBarOpen?'col-span-2':''} lg:static absolute `}>
           {<SideBar extended={sideBarOpen} onClick={()=>setSideBarOpen(b=>!b)}/>}
         </div>
+
         <div className={`${sideBarOpen?'lg:col-start-3':''} col-start-0 col-span-full grid grid-cols-12 lg:gap-8 gap-4 
         pl-8 pr-2 py-2
         overflow-y-auto h-screen scrollbar scrollbar-thumb-gray-500 scrollbar-track-transparent scrollbar-track-sky-300
@@ -57,7 +61,12 @@ function App() {
           </div>
           
         </div>
+
       </div>
+      {/* postButton */}
+      {isOwner&&<div className='absolute right-4 bottom-4 w-16 dark:outline-accent-black outline-accent-white
+      hover:outline-2 outline-1 rounded-full dark:bg-background-black bg-background-white'><PlusIcon/></div>}
+
     </div>
   )
 }
