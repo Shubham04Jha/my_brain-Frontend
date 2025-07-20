@@ -4,14 +4,15 @@ const variants = {
     primary:'',
     secondary:' rounded-md ',
     circular: 'rounded-full aspect-square',
-    square:'aspect-square rounded-xl'
+    square:'aspect-square rounded-xl',
+    regular:''
 }
 
 const sizes = {
     xs:'w-4',
-    sm: 'min-w-8 px-1 hover:ring-4 outline-1',
-    md: 'min-w-16 hover:ring-4 border-1 outline-1',
-    lg:'min-w-32 py-2 px-4 hover:ring-4 border-2 outline-2',
+    sm: 'min-w-8 px-1 hover:ring-2 outline-1',
+    md: 'min-w-16 hover:ring-2 outline-1',
+    lg:'min-w-32 py-2 px-4 hover:ring-2 border-2 outline-2',
     xl:'min-w-48 py-4 px-8 hover:ring-4 border-2 outline-2',
     '2xl':'w-64 py-8 px-16 hover:ring-4 border-4 outline-4'
 }
@@ -33,13 +34,16 @@ const IconSize = {
 }
 
 interface ButtonProps{
-    variant: 'primary'|'secondary'|'circular'|'square',
-    size: 'xs'|'sm'|'md'|'lg' |'xl';
+    variant: 'primary'|'secondary'|'circular'|'square'|'regular',
+    size?: 'xs'|'sm'|'md'|'lg' |'xl';
     startIcon?: ReactNode;
     text?: string;
     endIcon?: ReactNode;
     onClick?: ()=> void;
+    additionalStyles?: string;
+    iconContainerStyle?: string;
 }
+
 
 export const Button = ({
     size= 'md',
@@ -47,13 +51,31 @@ export const Button = ({
     startIcon,
     endIcon,
     variant = 'secondary', 
+    additionalStyles,
+    iconContainerStyle,
     onClick
 
 }: ButtonProps)=>{
     return (
+        variant=='regular'?
+        <button 
+            onClick={onClick}
+            className={`${additionalStyles} dark:bg-primary-dark bg-primary-white 
+            hover:border-2 
+            font-semibold
+            hover-ring-border-subtle 
+            flex justify-start pl-1 gap-2 items-center`}>
+                {startIcon&&
+                    <div className={`${iconContainerStyle} `}>
+                        {startIcon}
+                    </div>
+                }
+                {text}
+        </button>
+        :
         <button
             onClick={onClick}
-            className={` flex gap-2
+            className={` flex gap-2 justify-around 
                 dark:bg-secondary-black bg-secondary-white 
                 dark:outline-white outline-black
                 dark:border-accent-black border-accent-white

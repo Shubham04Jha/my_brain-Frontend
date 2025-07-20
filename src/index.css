@@ -9,14 +9,16 @@
     /* dark mode */
     --color-text-white: #f4eff6;
     --color-background-black: #09060a;
-    --color-primary-black: #d6a1de;
+    /* --color-primary-black: #d6a1de; */
+    --color-primary-black: #39f381;
     --color-secondary-black: #510859;
     --color-accent-black: #39f381;
 
     /* light mode */
     --color-text-black: #0e0910;
     --color-background-white: #f8f5f9;
-    --color-primary-white: #56215e;
+    /* --color-primary-white: #56215e; */
+    --color-primary-white: #0cc653;
     --color-secondary-white: #efa6f7;
     --color-accent-white: #0cc653;
 }

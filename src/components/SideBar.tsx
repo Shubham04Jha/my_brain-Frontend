@@ -1,5 +1,10 @@
 
+import { HomeIcon } from "../assets/icons/home";
+import { SharedBrainsIcon } from "../assets/icons/sharedBrains";
+import { ProfileIcon } from "../assets/icons/profile";
+import { ShareIcon } from "../assets/icons/share";
 import { SideBarButton } from "../assets/icons/sideBarButton";
+import { Button } from "./ui/Button";
 
 
 interface SideBarProps{
@@ -13,19 +18,47 @@ outline-accent-white outline-2
 z-10
 rounded-md`
 
+type IconNames = 'Home' | 'Profile' | 'Shared Brains' | 'Share Brain';
+type IconMap = {
+    [key in IconNames]: React.ComponentType;
+}
 
+const textToIcon: IconMap = {
+    'Home':HomeIcon,
+    'Profile':ProfileIcon,
+    'Shared Brains': SharedBrainsIcon,
+    'Share Brain': ShareIcon,
+}
+
+const Options = ()=>{
+    const textOptions = [`Home`,`Profile`,`Shared Brains`,`Share Brain`];
+    return (
+        <div className="flex flex-col justify-center items-center gap-8 w-full" >
+            {
+                textOptions.map((val)=>{
+                    const IconComponent = textToIcon[val];
+                    return (
+                        <div key={val} className="w-2/3">
+                            <Button variant="regular" additionalStyles={`w-full rounded-md text-sm h-8`} iconContainerStyle={`w-6`} startIcon={<IconComponent/>} text={val}/>
+                        </div>
+                    )
+                })
+            }
+        </div>
+    )
+}
 
 export const SideBar = ({extended=true, onClick}:SideBarProps)=>{
     return(
         extended?
             <div className={`${outerStyle} `}>
-                <div className="lg:static absolute w-full">
+                <div className="lg:static absolute w-full flex justify-center items-center h-2/3">
                     <div className="w-8 absolute dark:bg-background-black bg-background-white text-red-400
                      right-1 top-1 
                     hover:dark:bg-background-black hover:bg-background-white hover:cursor-pointer hover:outline-1 
                     hover:cursor-pointer hover:outline-1 dark:outline-accent-black outline-accent-white
                     rounded-md p-1" onClick={onClick}><SideBarButton extended={extended}/></div>
-                    <div className=" " ></div>
+                    <Options/>
                 </div>
             </div>
         :
@@ -37,8 +70,9 @@ export const SideBar = ({extended=true, onClick}:SideBarProps)=>{
                     dark:outline-accent-black outline-accent-white 
                     rounded-md p-1" 
                     onClick={onClick}>
-                <SideBarButton extended={extended}/>
+                    <SideBarButton extended={extended}/>
                 </div>
             </div>
         )
 }
+
