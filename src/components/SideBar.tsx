@@ -31,15 +31,15 @@ const textToIcon: IconMap = {
 }
 
 const Options = ()=>{
-    const textOptions = [`Home`,`Profile`,`Shared Brains`,`Share Brain`];
     return (
         <div className="flex flex-col justify-center items-center gap-8 w-full" >
             {
-                textOptions.map((val)=>{
-                    const IconComponent = textToIcon[val];
+                Object.entries(textToIcon).map
+                (([key,val])=>{
+                    const IconComponent = val;
                     return (
-                        <div key={val} className="w-2/3">
-                            <Button variant="regular" additionalStyles={`w-full rounded-md text-sm h-8`} iconContainerStyle={`w-6`} startIcon={<IconComponent/>} text={val}/>
+                        <div key={key} className="w-2/3">
+                            <Button variant="regular" additionalStyles={`w-full rounded-md text-sm h-8`} iconContainerStyle={`w-6`} startIcon={<IconComponent/>} text={key}/>
                         </div>
                     )
                 })
