@@ -8,6 +8,8 @@ import { ContentFolded } from './components/ui/ContentFolded';
 import { SideBar } from './components/SideBar';
 import { useState } from 'react';
 import { PlusIcon } from './assets/icons/plux';
+import { SearchIcon } from './assets/icons/search';
+import { SearchBar } from './components/SearchBar';
 
 function App() {
   const [sideBarOpen,setSideBarOpen] = useState(true);
@@ -33,6 +35,7 @@ function App() {
         pl-8 pr-2 py-2
         overflow-y-auto h-screen scrollbar scrollbar-thumb-gray-500 scrollbar-track-transparent scrollbar-track-sky-300
         `}>
+          <SearchBar/>
           <div className='lg:col-span-4 sm:col-span-6 col-span-10 sm:col-start-0 col-start-2 '>
             <ContentFolded isOwner title='This is Title' username='shubahm03jha' thoughts='This is some thoughts' tags={['entertainment','politics']}/>
           </div>

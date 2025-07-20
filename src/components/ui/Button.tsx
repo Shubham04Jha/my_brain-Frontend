@@ -64,7 +64,7 @@ export const Button = ({
             hover:border-2 
             font-semibold
             hover-ring-border-subtle 
-            flex justify-start pl-1 gap-2 items-center`}>
+            flex justify-start pl-1 gap-1 items-center`}>
                 {startIcon&&
                     <div className={`${iconContainerStyle} `}>
                         {startIcon}

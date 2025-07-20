@@ -32,14 +32,14 @@ const textToIcon: IconMap = {
 
 const Options = ()=>{
     return (
-        <div className="flex flex-col justify-center items-center gap-8 w-full" >
+        <div className="flex flex-col justify-around items-center gap-8 w-full" >
             {
                 Object.entries(textToIcon).map
                 (([key,val])=>{
                     const IconComponent = val;
                     return (
-                        <div key={key} className="w-2/3">
-                            <Button variant="regular" additionalStyles={`w-full rounded-md text-sm h-8`} iconContainerStyle={`w-6`} startIcon={<IconComponent/>} text={key}/>
+                        <div key={key} className="w-3/4">
+                            <Button variant="regular" additionalStyles={`w-full rounded-md text-sm min-h-8`} iconContainerStyle={`w-6`} startIcon={<IconComponent/>} text={key}/>
                         </div>
                     )
                 })
