@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { PlusIcon } from './assets/icons/plux';
 import { SearchIcon } from './assets/icons/search';
 import { SearchBar } from './components/SearchBar';
+import { Login } from './pages/login';
 
 function App() {
   const [sideBarOpen,setSideBarOpen] = useState(true);
@@ -17,7 +18,7 @@ function App() {
   return (
     <div className='dark
         dark:text-text-white text-text-black 
-        dark:bg-background-black bg-background-white px-2 h-screen
+        dark:bg-background-black bg-background-white h-screen
         '>
       {/* <ProfileCard variant='extended' username={'shubham@123'}/> */}
       {/* <ResponsiveButton text="Share Brain" size='md' padding='px-4 py-2' startIcon={shareSvg}/> */}
@@ -25,7 +26,7 @@ function App() {
       type='website' createdAt={Date.now()} username='shubham@123' thoughts='some thoughts I have for this test...'
       isPublic isOwner
       /> */}
-      <div className='grid grid-cols-12 relative'>
+      {/* <div className='grid grid-cols-12 relative'>
 
         <div className={`${sideBarOpen?'col-span-2':''} lg:static absolute `}>
           {<SideBar extended={sideBarOpen} onClick={()=>setSideBarOpen(b=>!b)}/>}
@@ -66,10 +67,11 @@ function App() {
         </div>
 
       </div>
-      {/* postButton */}
-      {isOwner&&<div className='absolute right-4 bottom-4 w-16 dark:outline-accent-black outline-accent-white
-      hover:outline-2 outline-1 rounded-full dark:bg-background-black bg-background-white'><PlusIcon/></div>}
 
+      {isOwner&&<div className='absolute right-4 bottom-4 w-16 dark:outline-accent-black outline-accent-white
+      hover:outline-2 outline-1 rounded-full dark:bg-background-black bg-background-white'><PlusIcon/></div>} */}
+
+      <Login/>
     </div>
   )
 }
