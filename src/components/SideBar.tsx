@@ -53,7 +53,7 @@ export const SideBar = ({extended=true, onClick}:SideBarProps)=>{
     return(
         extended?
             <div className={`${outerStyle} `}>
-                <div className='absolute top-2 left-4 flex gap-2'>
+                <div className='absolute top-8 left-4 flex gap-2'>
                     <div className='w-8'>< BrainLogo /></div>
                     <p className='font-bold text-xl'>Open Brain</p>
                 </div>
