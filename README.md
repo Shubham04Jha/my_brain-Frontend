@@ -1,6 +1,6 @@
 # todos
 
-- fix the ugly scroll (cuz it goes outside the container)
+- how to remove the addContent Component once out of focus. (ie if the user clicks anywhere but the card.) : by preventing event bubbling
 
 # React + TypeScript + Vite
 

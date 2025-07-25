@@ -39,9 +39,10 @@ interface ButtonProps{
     startIcon?: ReactNode;
     text?: string;
     endIcon?: ReactNode;
-    onClick?: ()=> void;
+    onClick?: (...x: any)=> void;
     additionalStyles?: string;
     iconContainerStyle?: string;
+    isDisable?:boolean
 }
 
 
@@ -53,18 +54,19 @@ export const Button = ({
     variant = 'secondary', 
     additionalStyles,
     iconContainerStyle,
+    isDisable,
     onClick
 
 }: ButtonProps)=>{
     return (
         variant=='regular'?
-        <button 
+        <button disabled={isDisable}
             onClick={onClick}
             className={`${additionalStyles} dark:bg-primary-dark bg-primary-white 
             hover:border-2 
             font-semibold
             hover-ring-border-subtle 
-            flex justify-start pl-1 gap-1 items-center`}>
+            flex justify-start px-1 gap-1 items-center pb-1`}>
                 {startIcon&&
                     <div className={`${iconContainerStyle} `}>
                         {startIcon}

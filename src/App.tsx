@@ -11,10 +11,13 @@ import { PlusIcon } from './assets/icons/plux';
 import { SearchIcon } from './assets/icons/search';
 import { SearchBar } from './components/SearchBar';
 import { Login } from './pages/login';
+import { Bounce, ToastContainer } from 'react-toastify';
+import { CreateContent } from './components/createContent';
 
 function App() {
   const [sideBarOpen,setSideBarOpen] = useState(true);
   const [isOwner,setIsOwner] = useState(true);
+  const [creatingContent,setCreatingContent] = useState<boolean>(false);
   return (
     <div className='dark
         dark:text-text-white text-text-black 
@@ -26,7 +29,10 @@ function App() {
       type='website' createdAt={Date.now()} username='shubham@123' thoughts='some thoughts I have for this test...'
       isPublic isOwner
       /> */}
-      {/* <div className='grid grid-cols-12 relative'>
+
+      <CreateContent creatingContent={creatingContent} setCreatingContent={setCreatingContent} />
+
+      <div className='grid grid-cols-12 relative'>
 
         <div className={`${sideBarOpen?'col-span-2':''} lg:static absolute `}>
           {<SideBar extended={sideBarOpen} onClick={()=>setSideBarOpen(b=>!b)}/>}
@@ -69,9 +75,22 @@ function App() {
       </div>
 
       {isOwner&&<div className='absolute right-4 bottom-4 w-16 dark:outline-accent-black outline-accent-white
-      hover:outline-2 outline-1 rounded-full dark:bg-background-black bg-background-white'><PlusIcon/></div>} */}
-
-      <Login/>
+      hover:outline-2 outline-1 rounded-full dark:bg-background-black bg-background-white'
+      onClick={()=>setCreatingContent(true)}><PlusIcon/></div>}
+      {/* <Login/> */}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+        />
     </div>
   )
 }
