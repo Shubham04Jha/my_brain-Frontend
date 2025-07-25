@@ -14,6 +14,7 @@ import { Login } from './pages/login';
 import { Bounce, ToastContainer } from 'react-toastify';
 import { CreateContent } from './components/createContent';
 import { BrainLogo } from './assets/icons/logo';
+import { Posts } from './pages/posts';
 
 function App() {
   const [sideBarOpen,setSideBarOpen] = useState(true);
@@ -30,53 +31,16 @@ function App() {
       type='website' createdAt={Date.now()} username='shubham@123' thoughts='some thoughts I have for this test...'
       isPublic isOwner
       /> */}
-
       {!sideBarOpen&&<div className='absolute top-2 left-12 flex gap-2'>
         <div className='w-8'>< BrainLogo /></div>
-        <p className='font-bold text-2xl'>Open Brain</p>
+        <p className='font-bold text-xl'>Open Brain</p>
       </div>}
       <CreateContent creatingContent={creatingContent} setCreatingContent={setCreatingContent} />
-
       <div className='grid grid-cols-12 relative'>
-
         <div className={`${sideBarOpen?'col-span-2':''} lg:static absolute `}>
           {<SideBar extended={sideBarOpen} onClick={()=>setSideBarOpen(b=>!b)}/>}
         </div>
-
-        <div className={`${sideBarOpen?'lg:col-start-3':''} col-start-0 col-span-full grid grid-cols-12 lg:gap-8 gap-4 
-        pl-8 pr-2 py-2
-        overflow-y-auto h-screen scrollbar scrollbar-thumb-gray-500 scrollbar-track-transparent scrollbar-track-sky-300
-        `}>
-          <SearchBar/>
-          <div className='lg:col-span-4 sm:col-span-6 col-span-10 sm:col-start-0 col-start-2 '>
-            <ContentFolded isOwner title='This is Title' username='shubahm03jha' thoughts='This is some thoughts' tags={['entertainment','politics']}/>
-          </div>
-          <div className='lg:col-span-4 sm:col-span-6 col-span-10 sm:col-start-0 col-start-2  '>
-            <ContentFolded isOwner title='This is Title' username='shubahm03jha' thoughts='This is some thoughts' tags={['entertainment','politics']}/>
-          </div>
-          <div className='lg:col-span-4 sm:col-span-6 col-span-10 sm:col-start-0 col-start-2 hover:cursor-pointer'>
-            <ContentFolded isOwner title='This is Title isnt it now? what do you think here asdfk asdf asfd some words for the title' username='shubahm03jha' thoughts='This is some thoughts
-            lorem ipsum dollar sfdfad afa dfasf ada dfa sdfa dfasdf asdfadf a adfadsfadsfjahsdfadsf  afdjlasdjflas dfalsdfjs fddasdfasd fasdf adfads fasdf adf adfasdf adsfasdf adfadfadf a df afaf asf afasdfa dfas dfasdf aasfdasdf asf adf asdf asdf afdfasfadf adf sdfaf words are added' tags={['entertainment','politics']}/>
-          </div>
-          <div className='lg:col-span-4 sm:col-span-6 col-span-10 sm:col-start-0 col-start-2  '>
-            <ContentFolded isOwner title='This is Title' username='shubahm03jha' thoughts='This is some thoughts' tags={['entertainment','politics']}/>
-          </div>
-          <div className='lg:col-span-4 sm:col-span-6 col-span-10 sm:col-start-0 col-start-2  '>
-            <ContentFolded isOwner title='This is Title' username='shubahm03jha' thoughts='This is some thoughts' tags={['entertainment','politics']}/>
-          </div>
-          <div className='lg:col-span-4 sm:col-span-6 col-span-10 sm:col-start-0 col-start-2 hover:cursor-pointer'>
-            <ContentFolded isOwner title='This is Title isnt it now? what do you think here asdfk asdf asfd some words for the title' username='shubahm03jha' thoughts='This is some thoughts
-            lorem ipsum dollar sfdfad afa dfasf ada dfa sdfa dfasdf asdfadf a adfadsfadsfjahsdfadsf  afdjlasdjflas dfalsdfjs fddasdfasd fasdf adfads fasdf adf adfasdf adsfasdf adfadfadf a df afaf asf afasdfa dfas dfasdf aasfdasdf asf adf asdf asdf afdfasfadf adf sdfaf words are added' tags={['entertainment','politics']}/>
-          </div>
-          <div className='lg:col-span-4 sm:col-span-6 col-span-10 sm:col-start-0 col-start-2  '>
-            <ContentFolded isOwner title='This is Title' username='shubahm03jha' thoughts='This is some thoughts' tags={['entertainment','politics']}/>
-          </div>
-          <div className='lg:col-span-4 sm:col-span-6 col-span-10 sm:col-start-0 col-start-2  '>
-            <ContentFolded isOwner title='This is Title' username='shubahm03jha' thoughts='This is some thoughts' tags={['entertainment','politics']}/>
-          </div>
-          
-        </div>
-
+        <Posts sideBarOpen={sideBarOpen} />
       </div>
 
       {isOwner&&<div className='absolute right-4 bottom-4 w-16 dark:outline-accent-black outline-accent-white

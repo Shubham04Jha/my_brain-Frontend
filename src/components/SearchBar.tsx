@@ -22,7 +22,7 @@ export const SearchBar = ()=>{
     const {elementRef,doFocus} = useFocus();
     return(
         <div className="col-span-full  h-12">
-            <div className={` fixed ${positioning} bg-gray-dark dark:bg-gray opacity-50 h-8 rounded-md flex items-center px-2`}
+            <div className={` absolute ${positioning} bg-gray-dark dark:bg-gray opacity-50 h-8 rounded-md flex items-center px-2`}
             onClick={doFocus} >
                 <div className=' w-6 dark:text-text-dark text-text-white'><SearchIcon/></div>
                 <input
