@@ -8,12 +8,12 @@ interface CreateContentProps{
     creatingContent: boolean;
     setCreatingContent: (x: boolean)=>void;
 }
-const defaultStles = `outline-1 dark:outline-primary-dark outline-primary-white rounded-lg
-            opacity-90 h-96 w-96 overflow-y-auto
+const defaultStles = `outline-2 dark:outline-accent-dark outline-accent-white rounded-lg
+             h-96 w-96 overflow-y-auto
             scrollbar scrollbar-thumb-gray-500 scrollbar-track-transparent scrollbar-track-sky-300
             flex justify-center 
             absolute z-20
-            dark:bg-background-black bg-background-white 
+            dark:bg-background-black/90 bg-background-white/90 
 `;
 export const CreateContent: React.FC<CreateContentProps> = ({creatingContent,setCreatingContent})=>{
     return(
@@ -22,7 +22,7 @@ export const CreateContent: React.FC<CreateContentProps> = ({creatingContent,set
             
             <div className={`${defaultStles}`} onClick={(e: React.MouseEvent)=>{e.stopPropagation()}}>
             
-                <div className=" w-3/4 my-2 ">
+                <div className=" w-3/4 my-2 space-y-4 py-4">
                     {/* <div className=" w-8 text-red-400 hover:outline-1 outline-red-400 rounded-md absolute right-4 top-4
                     hover:cursor-pointer"
                     onClick={()=>setCreatingContent(false)}><CrossIcon/></div> */}
