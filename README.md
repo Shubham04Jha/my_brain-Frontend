@@ -1,6 +1,5 @@
 # todos
 
-- how to remove the addContent Component once out of focus. (ie if the user clicks anywhere but the card.) : by preventing event bubbling
 
 # React + TypeScript + Vite
 
