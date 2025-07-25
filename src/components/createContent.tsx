@@ -1,6 +1,7 @@
 import React from "react";
 import { CrossIcon } from "../assets/icons/sideBarButton";
 import { Input } from "./ui/Input";
+import { Check } from "../assets/icons/check";
 
 
 
@@ -23,13 +24,16 @@ export const CreateContent: React.FC<CreateContentProps> = ({creatingContent,set
             <div className={`${defaultStles}`} onClick={(e: React.MouseEvent)=>{e.stopPropagation()}}>
             
                 <div className=" w-3/4 my-2 space-y-4 py-4">
-                    {/* <div className=" w-8 text-red-400 hover:outline-1 outline-red-400 rounded-md absolute right-4 top-4
+                    <div className=" w-8 text-red-400 hover:outline-1 outline-red-400 rounded-md absolute right-1 top-1
                     hover:cursor-pointer"
-                    onClick={()=>setCreatingContent(false)}><CrossIcon/></div> */}
+                    onClick={()=>setCreatingContent(false)}><CrossIcon/></div>
                     <Input type="text" placeholder="Link" additionalStyles="w-full" />
                     <Input type="text" placeholder="Title" additionalStyles="w-full" />
                     {/* <div className="bg-green-200 h-144"></div> */}
                     <Input type="textBox" placeholder="Thoughts..?" additionalStyles="w-full min-h-24 max-h-144" />
+                    <div className=" w-8 text-green-400 hover:outline-1 outline-green-400 rounded-lg absolute right-1 bottom-1
+                    hover:cursor-pointer pl-1 pt-1"
+                    onClick={()=>console.log('clicked')}><Check/></div>
                 </div>
             </div>
             

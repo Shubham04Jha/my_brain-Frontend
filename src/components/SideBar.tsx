@@ -5,6 +5,7 @@ import { ProfileIcon } from "../assets/icons/profile";
 import { ShareIcon } from "../assets/icons/share";
 import { SideBarButton } from "../assets/icons/sideBarButton";
 import { Button } from "./ui/Button";
+import { BrainLogo } from "../assets/icons/logo";
 
 
 interface SideBarProps{
@@ -52,6 +53,10 @@ export const SideBar = ({extended=true, onClick}:SideBarProps)=>{
     return(
         extended?
             <div className={`${outerStyle} `}>
+                <div className='absolute top-2 left-4 flex gap-2'>
+                    <div className='w-8'>< BrainLogo /></div>
+                    <p className='font-bold text-xl'>Open Brain</p>
+                </div>
                 <div className="lg:static absolute w-full flex justify-center items-center h-2/3">
                     <div className="w-8 absolute dark:bg-background-black bg-background-white text-red-400
                      right-1 top-1 

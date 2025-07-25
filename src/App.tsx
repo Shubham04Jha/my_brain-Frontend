@@ -13,6 +13,7 @@ import { SearchBar } from './components/SearchBar';
 import { Login } from './pages/login';
 import { Bounce, ToastContainer } from 'react-toastify';
 import { CreateContent } from './components/createContent';
+import { BrainLogo } from './assets/icons/logo';
 
 function App() {
   const [sideBarOpen,setSideBarOpen] = useState(true);
@@ -30,6 +31,10 @@ function App() {
       isPublic isOwner
       /> */}
 
+      {!sideBarOpen&&<div className='absolute top-2 left-12 flex gap-2'>
+        <div className='w-8'>< BrainLogo /></div>
+        <p className='font-bold text-2xl'>Open Brain</p>
+      </div>}
       <CreateContent creatingContent={creatingContent} setCreatingContent={setCreatingContent} />
 
       <div className='grid grid-cols-12 relative'>
