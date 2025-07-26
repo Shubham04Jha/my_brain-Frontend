@@ -16,35 +16,57 @@ import { CreateContent } from './components/createContent';
 import { BrainLogo } from './assets/icons/logo';
 import { Posts } from './pages/posts';
 
-import {BrowserRouter, Routes, Route, Outlet, Navigate} from 'react-router-dom';
+import {BrowserRouter, Routes, Route, Outlet, Navigate, useNavigate} from 'react-router-dom';
 import { baseUrl } from './config';
 
-const ProtectedRoute = ({isAuthenticated}: {isAuthenticated: boolean,})=>{
-  // useEffect(()=>{
-  //   if(!isAuthenticated){
-  //     toast.error('Not logged in... Redirected to login page');
-  //   }else{
-  //     toast.success('Welcome to Open Brain');
-  //   }
-  // },[isAuthenticated])
-  if(!isAuthenticated){
-    toast.error('Not logged in... Redirected to login page');
-  }else{
-    toast.success('Welcome to Open Brain');
+const ProtectedRoute = ({isAuthenticated,isLoading}: {isAuthenticated: boolean,isLoading: boolean})=>{
+  if (isLoading) {
+    return <div className="text-2xl">Loading...</div>; // or your custom loader
   }
-  return(
-    isAuthenticated?<Outlet/>:<Navigate to={"/login"} />
-    // isAuthenticated?<Navigate to={"/home"}/>:<Navigate to={"/login"} />
-  )
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+  return <Outlet />;
+}
+
+const checkAuthentication = async(): Promise<boolean> =>{
+  const token = localStorage.getItem('token');
+  const url = baseUrl+'/isAuthenticated';
+  if(!token) return false;
+  try {
+    const response = await fetch(url,{
+      method:'get',
+      headers:{
+        'Content-Type':'application/json',
+        'authorization': token
+      }
+    })
+    return response.status==200;
+  } catch (error) {
+    if(error instanceof Error) console.error(error.message);
+  }
+  return false;
 }
 
 function App() {
-  const [sideBarOpen,setSideBarOpen] = useState<boolean>(true);
   const [isOwner,setIsOwner] = useState<boolean>(true);
-  const [creatingContent,setCreatingContent] = useState<boolean>(false);
   const [isAuthenticated,setIsAuthenticated] = useState<boolean>(false);
-  const [isLoading,setIsLoading] = useState<boolean>(false);
+  const [isLoading,setIsLoading] = useState<boolean>(true);
   
+  useEffect(()=>{
+    setIsLoading(true);
+    const temp = async()=>{
+      const loggedIn = await checkAuthentication();
+      if(loggedIn){
+        setIsAuthenticated(true);
+      }else{
+        setIsAuthenticated(false);
+      }
+      setIsLoading(false);
+    }
+    temp();
+  },[])
+
   return (
     <div className='dark
         dark:text-text-white text-text-black 
@@ -59,10 +81,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='login' element={<Login setIsAuthenticated={setIsAuthenticated}/>}/>
-          <Route element={<ProtectedRoute isAuthenticated={isAuthenticated}/>}>
-            <Route path='home' element={<Temp isOwner={isOwner}/>}/>
+          <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} isLoading={isLoading} />}>
+            <Route path='home' element={<Home isOwner={isOwner}/>}/>
           </Route>
-
         </Routes>
       </BrowserRouter>
       <ToastContainer
@@ -82,11 +103,12 @@ function App() {
   )
 }
 
-interface temp {
+
+interface HomeProps {
   isOwner: boolean;
 }
 
-const Temp = ({isOwner}: temp)=>{
+const Home = ({isOwner}: HomeProps)=>{
   const [sideBarOpen,setSideBarOpen] = useState<boolean>(true);
   const [creatingContent,setCreatingContent] = useState<boolean>(false);
   return(
