@@ -6,6 +6,9 @@ import { ShareIcon } from "../assets/icons/share";
 import { SideBarButton } from "../assets/icons/sideBarButton";
 import { Button } from "./ui/Button";
 import { BrainLogo } from "../assets/icons/logo";
+import {LogoutLogo} from "../assets/icons/logout";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 interface SideBarProps{
@@ -19,7 +22,7 @@ outline-accent-white outline-2
 z-10
 rounded-md`
 
-type IconNames = 'Home' | 'Profile' | 'Shared Brains' | 'Share Brain';
+type IconNames = 'Home' | 'Profile' | 'Shared Brains' | 'Share Brain'| 'Logout';
 type IconMap = {
     [key in IconNames]: React.ComponentType;
 }
@@ -29,18 +32,37 @@ const textToIcon: IconMap = {
     'Profile':ProfileIcon,
     'Shared Brains': SharedBrainsIcon,
     'Share Brain': ShareIcon,
+    'Logout': LogoutLogo
+}
+
+type textToFunctionType={
+    [key in IconNames]: ()=>void;
 }
 
 const Options = ()=>{
+    const navigate = useNavigate();
+    const textToFunction: textToFunctionType = {
+        'Home': ()=>{},
+        'Profile': ()=>{},
+        'Shared Brains': ()=>{},
+        'Share Brain': async ()=>{
+            await navigator.clipboard.writeText('http://localhost:3000/api/v1/share/'+localStorage.getItem('username'));
+            toast.success('Brain Link Copied!',{autoClose:2000});
+        },
+        'Logout': ()=>{
+            localStorage.removeItem('token');
+            navigate('/login');
+        }
+    }
     return (
-        <div className="flex flex-col justify-around items-center gap-8 w-full" >
+        <div className="flex flex-col justify-around items-center gap-8 w-full mt-24" >
             {
                 Object.entries(textToIcon).map
                 (([key,val])=>{
                     const IconComponent = val;
                     return (
-                        <div key={key} className="w-3/4">
-                            <Button variant="regular" additionalStyles={`w-full rounded-md text-sm min-h-8`} iconContainerStyle={`w-6`} startIcon={<IconComponent/>} text={key}/>
+                        <div key={key} className="w-3/4 " onClick={textToFunction[key as IconNames]}>
+                            <Button variant="regular" additionalStyles={`w-full rounded-md text-sm min-h-8 hover:cursor-pointer `} iconContainerStyle={`w-6`} startIcon={<IconComponent/>} text={key}/>
                         </div>
                     )
                 })
