@@ -1,28 +1,28 @@
-import { useState, type ChangeEvent } from "react"
+import { useRef, useState, type ChangeEvent } from "react"
 import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { baseUrl } from "../config";
 import { Button } from "../components/ui/Button";
 
-
-interface LoginProps{};
-
-interface dataProps{
-    username: string;
-    password: string;
-}
+import {Navigate, useNavigate} from 'react-router-dom';
 
 
-export const Login: React.FC<LoginProps> = ()=>{
-    const [data,setData] = useState<dataProps>({
-        username:'',
-        password:''
-    });
+interface LoginProps{
+    setIsAuthenticated: (b:boolean)=>void;
+};
+
+export const Login: React.FC<LoginProps> = ({setIsAuthenticated})=>{
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const usernameRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+    const navigate = useNavigate();
     const handleLogin = async (endpoint: 'signup'|'signin'): Promise<void> =>{
-        setIsLoading(true);
         const url = baseUrl+'/'+ endpoint;
+        const data = {
+            username: usernameRef.current?.value,
+            password: passwordRef.current?.value
+        }
         try{
             const response = await fetch(url,{
                 headers:{
@@ -32,9 +32,13 @@ export const Login: React.FC<LoginProps> = ()=>{
                 body: JSON.stringify(data)
             })
             const parsedResponse = await response.json();
-            console.log(parsedResponse.message);
-            if(parsedResponse.status==200){
+            if(response.status==200){
                 toast.success(parsedResponse.message);
+                if(parsedResponse.token){
+                    localStorage.setItem('token',`Bearer ${parsedResponse.token}`);
+                    setIsAuthenticated(true);
+                    navigate('/home');
+                }
             }else{
                 toast.error(parsedResponse.message);
             }
@@ -45,14 +49,6 @@ export const Login: React.FC<LoginProps> = ()=>{
                 console.error('Unexpected Error Occurred!');
             }
         }
-        setIsLoading(false);
-    }
-    const handleChange = (e: ChangeEvent<HTMLInputElement>): void =>{
-        const {name,value} = e.target;
-        setData({
-            ...data,
-            [name]:value
-        })
     }
     return(
         <div className="h-screen w-full flex justify-center items-center">
@@ -60,14 +56,14 @@ export const Login: React.FC<LoginProps> = ()=>{
                 <div 
                 className="outline-2 dark:outline-primary-black outline-primary-white px-4 py-8 rounded-md flex-col gap-4 flex " >
                     <div className="flex flex-col gap-4">
-                        <input type="text" placeholder="username" onChange={(e: ChangeEvent<HTMLInputElement>)=>handleChange(e)} required={true} name="username" className="pb-1 pl-2 outline-1 dark:outline-primary-black outline-primary-white  rounded-md" />
-                        <input type="password" onChange={(e: ChangeEvent<HTMLInputElement>)=>handleChange(e)} placeholder="password" required={true} name="password" className="pb-1 pl-2 outline-1 dark:outline-primary-black outline-primary-white  rounded-md" />
+                        <input type="text" placeholder="username" ref={usernameRef} required={true} name="username" className="pb-1 pl-2 outline-1 dark:outline-primary-black outline-primary-white  rounded-md" />
+                        <input type="password" ref={passwordRef} placeholder="password" required={true} name="password" className="pb-1 pl-2 outline-1 dark:outline-primary-black outline-primary-white  rounded-md" />
                     </div>
                     <div className="flex justify-around items-center h-16">
-                        <Button text={"Signup"} onClick={()=>{
+                        <Button text={"Signup"} isLoading={isLoading} onClick={()=>{
                             handleLogin('signup');
                         }} variant="regular" additionalStyles="rounded-md" />
-                        <Button text={"Signin"} onClick={()=>{
+                        <Button text={"Signin"} isLoading={isLoading} onClick={()=>{
                             handleLogin('signin');
                         }} variant="regular" additionalStyles="rounded-md" />
                     </div>

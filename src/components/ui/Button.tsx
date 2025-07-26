@@ -42,7 +42,8 @@ interface ButtonProps{
     onClick?: (...x: any)=> void;
     additionalStyles?: string;
     iconContainerStyle?: string;
-    isDisable?:boolean
+    isDisable?:boolean;
+    isLoading?:boolean
 }
 
 
@@ -55,6 +56,7 @@ export const Button = ({
     additionalStyles,
     iconContainerStyle,
     isDisable,
+    isLoading,
     onClick
 
 }: ButtonProps)=>{

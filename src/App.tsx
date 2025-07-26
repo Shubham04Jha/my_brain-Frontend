@@ -6,20 +6,45 @@ import { shareSvg } from "./assets/icons/share";
 import { ContentExpanded } from './components/ui/ContentExpanded';
 import { ContentFolded } from './components/ui/ContentFolded';
 import { SideBar } from './components/SideBar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PlusIcon } from './assets/icons/plux';
 import { SearchIcon } from './assets/icons/search';
 import { SearchBar } from './components/SearchBar';
 import { Login } from './pages/login';
-import { Bounce, ToastContainer } from 'react-toastify';
+import { Bounce, toast, ToastContainer } from 'react-toastify';
 import { CreateContent } from './components/createContent';
 import { BrainLogo } from './assets/icons/logo';
 import { Posts } from './pages/posts';
 
+import {BrowserRouter, Routes, Route, Outlet, Navigate} from 'react-router-dom';
+import { baseUrl } from './config';
+
+const ProtectedRoute = ({isAuthenticated}: {isAuthenticated: boolean,})=>{
+  // useEffect(()=>{
+  //   if(!isAuthenticated){
+  //     toast.error('Not logged in... Redirected to login page');
+  //   }else{
+  //     toast.success('Welcome to Open Brain');
+  //   }
+  // },[isAuthenticated])
+  if(!isAuthenticated){
+    toast.error('Not logged in... Redirected to login page');
+  }else{
+    toast.success('Welcome to Open Brain');
+  }
+  return(
+    isAuthenticated?<Outlet/>:<Navigate to={"/login"} />
+    // isAuthenticated?<Navigate to={"/home"}/>:<Navigate to={"/login"} />
+  )
+}
+
 function App() {
-  const [sideBarOpen,setSideBarOpen] = useState(true);
-  const [isOwner,setIsOwner] = useState(true);
+  const [sideBarOpen,setSideBarOpen] = useState<boolean>(true);
+  const [isOwner,setIsOwner] = useState<boolean>(true);
   const [creatingContent,setCreatingContent] = useState<boolean>(false);
+  const [isAuthenticated,setIsAuthenticated] = useState<boolean>(false);
+  const [isLoading,setIsLoading] = useState<boolean>(false);
+  
   return (
     <div className='dark
         dark:text-text-white text-text-black 
@@ -31,22 +56,15 @@ function App() {
       type='website' createdAt={Date.now()} username='shubham@123' thoughts='some thoughts I have for this test...'
       isPublic isOwner
       /> */}
-      {!sideBarOpen&&<div className='absolute top-2 left-12 flex gap-2'>
-        <div className='w-8'>< BrainLogo /></div>
-        <p className='font-bold text-xl'>Open Brain</p>
-      </div>}
-      <CreateContent creatingContent={creatingContent} setCreatingContent={setCreatingContent} />
-      <div className='grid grid-cols-12 relative'>
-        <div className={`${sideBarOpen?'col-span-2':''} lg:static absolute `}>
-          {<SideBar extended={sideBarOpen} onClick={()=>setSideBarOpen(b=>!b)}/>}
-        </div>
-        <Posts sideBarOpen={sideBarOpen} />
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path='login' element={<Login setIsAuthenticated={setIsAuthenticated}/>}/>
+          <Route element={<ProtectedRoute isAuthenticated={isAuthenticated}/>}>
+            <Route path='home' element={<Temp isOwner={isOwner}/>}/>
+          </Route>
 
-      {isOwner&&<div className='absolute right-4 bottom-4 w-16 dark:outline-accent-black outline-accent-white
-      hover:outline-2 outline-1 rounded-full dark:bg-background-black bg-background-white'
-      onClick={()=>setCreatingContent(true)}><PlusIcon/></div>}
-      {/* <Login/> */}
+        </Routes>
+      </BrowserRouter>
       <ToastContainer
         position="bottom-right"
         autoClose={5000}
@@ -61,6 +79,34 @@ function App() {
         transition={Bounce}
         />
     </div>
+  )
+}
+
+interface temp {
+  isOwner: boolean;
+}
+
+const Temp = ({isOwner}: temp)=>{
+  const [sideBarOpen,setSideBarOpen] = useState<boolean>(true);
+  const [creatingContent,setCreatingContent] = useState<boolean>(false);
+  return(
+    <>
+      {!sideBarOpen&&<div className='absolute top-2 left-12 flex gap-2'>
+        <div className='w-8'>< BrainLogo /></div>
+        <p className='font-bold text-xl'>Open Brain</p>
+      </div>}
+      <CreateContent creatingContent={creatingContent} setCreatingContent={setCreatingContent} />
+      <div className='grid grid-cols-12 relative'>
+        <div className={`${sideBarOpen?'col-span-2':''} lg:static absolute `}>
+          {<SideBar extended={sideBarOpen} onClick={()=>setSideBarOpen((b)=>!b)}/>}
+        </div>
+        <Posts sideBarOpen={sideBarOpen} />
+      </div>
+
+      {isOwner&&<div className='absolute right-4 bottom-4 w-16 dark:outline-accent-black outline-accent-white
+      hover:outline-2 outline-1 rounded-full dark:bg-background-black bg-background-white'
+      onClick={()=>setCreatingContent(true)}><PlusIcon/></div>}
+    </>
   )
 }
 
