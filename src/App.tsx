@@ -18,6 +18,7 @@ import { Posts } from './pages/posts';
 
 import {BrowserRouter, Routes, Route, Outlet, Navigate, useNavigate} from 'react-router-dom';
 import { baseUrl } from './config';
+import { PageNotFound } from './pages/PageNotFound';
 
 const ProtectedRoute = ({isAuthenticated,isLoading}: {isAuthenticated: boolean,isLoading: boolean})=>{
   if (isLoading) {
@@ -82,8 +83,9 @@ function App() {
         <Routes>
           <Route path='login' element={<Login setIsAuthenticated={setIsAuthenticated}/>}/>
           <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} isLoading={isLoading} />}>
-            <Route path='home' element={<Home isOwner={isOwner}/>}/>
+            <Route path='/' element={<Home isOwner={isOwner}/>}/>
           </Route>
+          <Route path='*' element ={<PageNotFound/>}/>
         </Routes>
       </BrowserRouter>
       <ToastContainer

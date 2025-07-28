@@ -42,7 +42,9 @@ type textToFunctionType={
 const Options = ()=>{
     const navigate = useNavigate();
     const textToFunction: textToFunctionType = {
-        'Home': ()=>{},
+        'Home': ()=>{
+            navigate('/');
+        },
         'Profile': ()=>{},
         'Shared Brains': ()=>{},
         'Share Brain': async ()=>{

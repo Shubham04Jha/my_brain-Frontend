@@ -37,7 +37,7 @@ export const Login: React.FC<LoginProps> = ({setIsAuthenticated})=>{
                 if(parsedResponse.token){
                     localStorage.setItem('token',`Bearer ${parsedResponse.token}`);
                     setIsAuthenticated(true);
-                    navigate('/home');
+                    navigate('/');
                 }
             }else{
                 toast.error(parsedResponse.message);
