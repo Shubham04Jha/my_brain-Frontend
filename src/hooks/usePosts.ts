@@ -37,7 +37,7 @@ export const usePosts = (): {posts: Post[],loading: boolean, error: string|null,
                 setError(error.message || 'Something went wrong');
                 console.error("Error fetching posts:", error);
             }finally{
-                setLoading(true);
+                setLoading(false);
             }
         }
         fetchPosts();

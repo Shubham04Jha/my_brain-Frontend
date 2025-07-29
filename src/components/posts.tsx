@@ -7,7 +7,6 @@ interface PostsProps{
     sideBarOpen: boolean;
 }
 export const Posts: React.FC<PostsProps> =  ({sideBarOpen})=>{
-    const {posts,loading,error,refetch} = usePosts();
     return(
         <>
             
@@ -18,14 +17,32 @@ export const Posts: React.FC<PostsProps> =  ({sideBarOpen})=>{
                 overflow-y-auto h-screen scrollbar scrollbar-thumb-gray-500 scrollbar-track-transparent scrollbar-track-sky-300
                 `}>
                 <SearchBar/>
-                {posts.length>0?posts.map((post)=>{
-                    return(
-                        <Post title={post.title} username={post.title} thoughts={post.thoughts} tags={post.tags} />
-                    )
-                })
-                :<NoContent/>}
+                <Display />
             </div>
         </>
+    )
+}
+
+const Display = ()=>{
+    const {posts,loading,error,refetch} = usePosts();
+    if (loading) {
+        return <div>Loading posts...</div>;
+    }
+    if (error) {
+        return (
+        <div>
+            <p>Error: {error}</p>
+            <button onClick={refetch}>Retry</button>
+        </div>
+        );
+    }
+    return(
+        posts.length>0?posts.map((post)=>{
+            return(
+                <Post title={post.title} username={post.title} thoughts={post.thoughts} tags={post.tags} />
+            )
+        })
+        :<NoContent/>
     )
 }
 
