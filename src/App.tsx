@@ -14,11 +14,13 @@ import { Login } from './pages/login';
 import { Bounce, toast, ToastContainer } from 'react-toastify';
 import { CreateContent } from './components/createContent';
 import { BrainLogo } from './assets/icons/logo';
-import { Posts } from './pages/posts';
+// import { Posts } from './components/posts';
+import { Posts } from './pages/Test';
 
 import {BrowserRouter, Routes, Route, Outlet, Navigate, useNavigate} from 'react-router-dom';
 import { baseUrl } from './config';
 import { PageNotFound } from './pages/PageNotFound';
+import { Home } from './pages/Home';
 
 const ProtectedRoute = ({isAuthenticated,isLoading}: {isAuthenticated: boolean,isLoading: boolean})=>{
   if (isLoading) {
@@ -86,6 +88,7 @@ function App() {
             <Route path='/' element={<Home isOwner={isOwner}/>}/>
           </Route>
           <Route path='*' element ={<PageNotFound/>}/>
+          <Route path='/test' element ={<Posts sideBarOpen={false} />}/>
         </Routes>
       </BrowserRouter>
       <ToastContainer
@@ -105,33 +108,5 @@ function App() {
   )
 }
 
-
-interface HomeProps {
-  isOwner: boolean;
-}
-
-const Home = ({isOwner}: HomeProps)=>{
-  const [sideBarOpen,setSideBarOpen] = useState<boolean>(true);
-  const [creatingContent,setCreatingContent] = useState<boolean>(false);
-  return(
-    <>
-      {!sideBarOpen&&<div className='absolute top-2 left-12 flex gap-2'>
-        <div className='w-8'>< BrainLogo /></div>
-        <p className='font-bold text-xl'>Open Brain</p>
-      </div>}
-      <CreateContent creatingContent={creatingContent} setCreatingContent={setCreatingContent} />
-      <div className='grid grid-cols-12 relative'>
-        <div className={`${sideBarOpen?'col-span-2':''} lg:static absolute `}>
-          {<SideBar extended={sideBarOpen} onClick={()=>setSideBarOpen((b)=>!b)}/>}
-        </div>
-        <Posts sideBarOpen={sideBarOpen} />
-      </div>
-
-      {isOwner&&<div className='absolute right-4 bottom-4 w-16 dark:outline-accent-black outline-accent-white
-      hover:outline-2 outline-1 rounded-full dark:bg-background-black bg-background-white'
-      onClick={()=>setCreatingContent(true)}><PlusIcon/></div>}
-    </>
-  )
-}
 
 export default App
