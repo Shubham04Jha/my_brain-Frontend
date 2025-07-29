@@ -1,3 +1,4 @@
+import { usePosts } from "../hooks/usePosts";
 import { SearchBar } from "./SearchBar";
 import { ContentFolded } from "./ui/ContentFolded";
 
@@ -5,21 +6,34 @@ import { ContentFolded } from "./ui/ContentFolded";
 interface PostsProps{
     sideBarOpen: boolean;
 }
-export const Posts: React.FC<PostsProps> = ({sideBarOpen})=>{
+export const Posts: React.FC<PostsProps> =  ({sideBarOpen})=>{
+    const {posts,loading,error,refetch} = usePosts();
     return(
         <>
             
-            <div className={`${sideBarOpen?'lg:col-start-3':''} col-start-0 col-span-full grid grid-cols-12 lg:gap-x-8 gap-x-4 gap-y-2
+            <div className={`${sideBarOpen?'lg:col-start-3':''} col-start-0 col-span-full 
+                grid grid-cols-12 grid-rows-[4vh_auto]
+                lg:gap-8 gap-4 
                 pl-8 pr-2 py-2
                 overflow-y-auto h-screen scrollbar scrollbar-thumb-gray-500 scrollbar-track-transparent scrollbar-track-sky-300
-                grid-rows-[8vh_auto]
                 `}>
                 <SearchBar/>
-                <Post isOwner title='This is Title' username='shubham03jha' thoughts='This is some thoughts' />
-                
-                
+                {posts.length>0?posts.map((post)=>{
+                    return(
+                        <Post title={post.title} username={post.title} thoughts={post.thoughts} tags={post.tags} />
+                    )
+                })
+                :<NoContent/>}
             </div>
         </>
+    )
+}
+
+const NoContent = ()=>{
+    return(
+        <div className="col-span-full">
+            No Contents yet!
+        </div>
     )
 }
 
