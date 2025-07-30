@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Eye } from "../../assets/icons/eye";
+import { useSetPublic } from "../../hooks/useSetPublic";
 
 interface ContentFoldedProps{
     tags?: string[];
@@ -7,7 +8,8 @@ interface ContentFoldedProps{
     title: string;
     username: string;
     isOwner?: boolean;
-    isPublic?: boolean;
+    isPublic: boolean;
+    contentId: string;
 }
 
 const defaultStyles = `
@@ -25,16 +27,22 @@ export const ContentFolded = ({
     title,
     username,
     isOwner,
-    isPublic
+    isPublic,
+    contentId
 
 }:ContentFoldedProps)=>{
-    const [visible,setVisible] = useState(isPublic);
+    const [visible,setVisible] = useState<boolean>(isPublic);
+    const {setPublic} = useSetPublic();
+    const handleVisible = async ()=>{
+        const data = await setPublic(contentId,visible);
+        setVisible(data);
+    }
     return (
         <div className={`${defaultStyles} `}>
             {tags&&<div className="flex gap-2">{tags.map((tag,idx)=><p key={idx} className="dark:text-accent-black text-accent-white">#{tag}</p>)}</div>}
             <div className="flex gap-4 justify-center">
                 <p className="p-2 text-4xl dark:outline-accent-black outline-accent-white rounded-md items-center ">{title}</p>
-                {isOwner&&<div className="hover:cursor-pointer flex items-center -mb-1" onClick={()=>setVisible(b=>!b)}><Eye isPublic={visible} /></div>}
+                {isOwner&&<div className="hover:cursor-pointer flex items-center -mb-1" onClick={handleVisible}><Eye isPublic={visible} /></div>}
             </div>
             <p>Author: {username}</p>
             <div className="relative flex-grow " >

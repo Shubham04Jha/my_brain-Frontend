@@ -1,6 +1,8 @@
+import { useContext } from "react";
 import { usePosts } from "../hooks/usePosts";
 import { SearchBar } from "./SearchBar";
 import { ContentFolded } from "./ui/ContentFolded";
+import { OpenBrainContext } from "../context";
 
 
 interface PostsProps{
@@ -25,6 +27,7 @@ export const Posts: React.FC<PostsProps> =  ({sideBarOpen})=>{
 
 const Display = ()=>{
     const {posts,loading,error,refetch} = usePosts();
+    const {username} = useContext(OpenBrainContext);
     if (loading) {
         return <div>Loading posts...</div>;
     }
@@ -37,9 +40,10 @@ const Display = ()=>{
         );
     }
     return(
-        posts.length>0?posts.map((post)=>{
+        posts.length>0?posts.map((post,idx)=>{
+            const Postusername = post.userId.username;
             return(
-                <Post title={post.title} username={post.title} thoughts={post.thoughts} tags={post.tags} />
+                <Post title={post.title} username={username} thoughts={post.thoughts} tags={post.tags} isOwner={username==Postusername} isPublic={post.isPublic} contentId={post._id} key={idx}/>
             )
         })
         :<NoContent/>
@@ -55,17 +59,19 @@ const NoContent = ()=>{
 }
 
 interface PostProps{
-    isOwner?:boolean;
+    isOwner:boolean;
+    isPublic: boolean;
     title: string;
     username:string;
     thoughts:string;
     tags?:string[];
+    contentId: string;
 } 
 
-const Post = ({isOwner=false,title,username,thoughts,tags}:PostProps)=>{
+const Post = (props:PostProps)=>{
     return(
         <div className='lg:col-span-4 sm:col-span-6 col-span-10 sm:col-start-0 col-start-2  '>
-            <ContentFolded isOwner={isOwner} title={title} username={username} thoughts={thoughts} tags={tags}/>
+            <ContentFolded {...props} />
         </div>
     )
 }

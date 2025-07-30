@@ -2,9 +2,14 @@ import { useEffect, useState } from "react";
 import { baseUrl } from "../config"
 
 interface Post{
+    _id: string;
     isOwner?:boolean,
+    isPublic:boolean,
     title:string,
-    username:string,
+    userId:{
+        _id: string,
+        username: string
+    },
     thoughts:string,
     tags?: string[]
 }
@@ -32,7 +37,7 @@ export const usePosts = (): {posts: Post[],loading: boolean, error: string|null,
                     throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-                setPosts(data);
+                setPosts(data.contents);
             } catch (error: any) {
                 setError(error.message || 'Something went wrong');
                 console.error("Error fetching posts:", error);
