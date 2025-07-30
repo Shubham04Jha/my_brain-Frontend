@@ -1,4 +1,4 @@
-import { useRef, useState, type ChangeEvent } from "react"
+import { useContext, useRef, useState, type ChangeEvent } from "react"
 import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -6,6 +6,7 @@ import { baseUrl } from "../config";
 import { Button } from "../components/ui/Button";
 
 import {Navigate, useNavigate} from 'react-router-dom';
+import { OpenBrainContext } from "../context";
 
 
 interface LoginProps{
@@ -13,6 +14,7 @@ interface LoginProps{
 };
 
 export const Login: React.FC<LoginProps> = ({setIsAuthenticated})=>{
+    const {setUsername} = useContext(OpenBrainContext);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const usernameRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
@@ -37,6 +39,7 @@ export const Login: React.FC<LoginProps> = ({setIsAuthenticated})=>{
                 if(parsedResponse.token){
                     localStorage.setItem('token',`Bearer ${parsedResponse.token}`);
                     setIsAuthenticated(true);
+                    setUsername(data.username as string);
                     navigate('/');
                 }
             }else{

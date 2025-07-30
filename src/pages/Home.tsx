@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { BrainLogo } from "../assets/icons/logo";
 import { PlusIcon } from "../assets/icons/plux";
 import { CreateContent } from "../components/createContent";
 import { Posts } from "../components/posts";
 import { SideBar } from "../components/SideBar";
+// import { OpenBrainContext } from "../context";
+import { toast } from "react-toastify";
 
 
 
@@ -14,6 +16,9 @@ interface HomeProps {
 export const Home = ({isOwner}: HomeProps)=>{
   const [sideBarOpen,setSideBarOpen] = useState<boolean>(true);
   const [creatingContent,setCreatingContent] = useState<boolean>(false);
+  // const {username} = useContext(OpenBrainContext);
+  // console.log(OpenBrainContext);
+  // console.log('Home: '+username);
   return(
     <>
       {!sideBarOpen&&
