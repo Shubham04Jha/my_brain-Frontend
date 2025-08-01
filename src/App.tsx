@@ -20,7 +20,7 @@ const ProtectedRoute = ({isAuthenticated,isLoading}: {isAuthenticated: boolean,i
   return <Outlet />;
 }
 
-const checkAuthentication = async(setUsername: (x: string)=>void, username: string): Promise<boolean> =>{
+const checkAuthentication = async(setUsername: (x: string)=>void, username: string): Promise<boolean> =>{''
   const token = localStorage.getItem('token');
   const url = baseUrl+'/isAuthenticated';
   if(!token) return false;

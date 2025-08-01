@@ -43,7 +43,7 @@ const Display = ()=>{
         posts.length>0?posts.map((post,idx)=>{
             const Postusername = post.userId.username;
             return(
-                <Post title={post.title} username={username} thoughts={post.thoughts} tags={post.tags} isOwner={username==Postusername} isPublic={post.isPublic} contentId={post._id} key={idx}/>
+                <Post link={post.link} type={post.type} title={post.title} username={username} thoughts={post.thoughts} tags={post.tags} isOwner={username==Postusername} isPublic={post.isPublic} contentId={post._id} key={idx}/>
             )
         })
         :<NoContent/>
@@ -59,6 +59,8 @@ const NoContent = ()=>{
 }
 
 interface PostProps{
+    link:string;
+    type: string;
     isOwner:boolean;
     isPublic: boolean;
     title: string;

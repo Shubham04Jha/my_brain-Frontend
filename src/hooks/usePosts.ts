@@ -3,6 +3,8 @@ import { baseUrl } from "../config"
 
 interface Post{
     _id: string;
+    link: string;
+    type: string;
     isOwner?:boolean,
     isPublic:boolean,
     title:string,
