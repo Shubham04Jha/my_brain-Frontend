@@ -75,6 +75,7 @@ const handleHost = (link: string): string=>{
         case 'www.youtube.com':
             return extractYouTubeVideoId(link) || 'couldn\'d parse url...';
         case 'www.twitter.com':
+        case 'x.com':
         case 'www.x.com':
             return extractTweetId(link)||'couldn\'d parse url...'
         default:
@@ -92,10 +93,11 @@ const LinkEmbed = ({link,type}:{link:string,type: string})=>{
             )
         case 'x':
             return(
-                <div className="w-auto h-full">
-                    <blockquote className="twitter-tweet">
-                        <a href={link}></a>
-                    </blockquote>
+                <div className="w-full h-full">
+                    <blockquote data-theme="" className="twitter-tweet"> 
+                        <a href={`https://twitter.com/username/status/${resource_id}`}></a>
+                    </blockquote> 
+                    <script async src="https://platform.twitter.com/widgets.js" charSet="utf-8"></script>
                 </div>
             )
         default:
