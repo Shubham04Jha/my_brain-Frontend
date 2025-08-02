@@ -5,6 +5,7 @@ import { CreateContent } from "../components/createContent";
 import { Posts } from "../components/posts";
 import { SideBar } from "../components/SideBar";
 import { usePosts } from "../hooks/usePosts";
+import { AddContentButton } from "../components/ui/addContentButton";
 
 
 
@@ -34,9 +35,7 @@ export const Home = ({showAddContentButton}: HomeProps)=>{
         <Posts posts={posts} loading={loading} error={error} refetch={refetch} sideBarOpen={sideBarOpen} />
       </div>
 
-      {showAddContentButton&&<div className='absolute right-4 bottom-4 w-16 dark:outline-accent-black outline-accent-white
-      hover:outline-2 outline-1 rounded-full dark:bg-background-black bg-background-white'
-      onClick={()=>setCreatingContent(true)}><PlusIcon/></div>}
+      {showAddContentButton&&<AddContentButton handleClick={()=>setCreatingContent(true)} />}
     </>
   )
 }

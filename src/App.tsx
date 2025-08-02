@@ -9,6 +9,7 @@ import { Posts } from './pages/Test';
 import { PageNotFound } from './pages/PageNotFound';
 import { Home } from './pages/Home';
 import { OpenBrainContext, OpenBrainProvider } from './context';
+import { SharedBrains } from './pages/SharedBrain';
 
 const ProtectedRoute = ({isAuthenticated,isLoading}: {isAuthenticated: boolean,isLoading: boolean})=>{
   if (isLoading) {
@@ -79,9 +80,10 @@ function AppContent() {
         <Route path='login' element={<Login setIsAuthenticated={setIsAuthenticated}/>}/>
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} isLoading={isLoading} />}>
           <Route path='/' element={<Home showAddContentButton={true}/>}/>
+          <Route path='/profile' element={<></>} />
+          <Route path='/shared' element={<SharedBrains />  } />
         </Route>
         <Route path='*' element ={<PageNotFound/>}/>
-        <Route path='/test' element ={<Posts sideBarOpen={false} />}/>
       </Routes>
     </BrowserRouter>
   )
