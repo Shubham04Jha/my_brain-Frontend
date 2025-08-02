@@ -12,7 +12,7 @@ interface CreateContentProps{
     setCreatingContent: (x: boolean)=>void;
     refetch: ()=>void;
 }
-const defaultStles = `outline-2 dark:outline-accent-dark outline-accent-white rounded-lg
+const defaultStyles = `outline-2 dark:outline-accent-dark outline-accent-white rounded-lg
              h-96 w-96 overflow-y-auto
             scrollbar scrollbar-thumb-gray-500 scrollbar-track-transparent scrollbar-track-sky-300
             flex justify-center 
@@ -78,7 +78,7 @@ export const CreateContent: React.FC<CreateContentProps> = ({creatingContent,set
         creatingContent&&<div className=" w-full h-screen absolute z-11 left-0 top-0 dark:bg-background-black/50 bg-background-white/50
         flex justify-center items-center" onClick={()=>setCreatingContent(false)}>
             
-            <div className={`${defaultStles}`} onClick={(e: React.MouseEvent)=>{e.stopPropagation()}}>
+            <div className={`${defaultStyles}`} onClick={(e: React.MouseEvent)=>{e.stopPropagation()}}>
             
                 <div className=" w-3/4 my-2 space-y-4 py-4">
                     <div className=" w-8 text-red-400 hover:outline-1 outline-red-400 rounded-md absolute right-1 top-1
