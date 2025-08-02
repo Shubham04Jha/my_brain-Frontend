@@ -38,6 +38,7 @@ const checkAuthentication = async(setUsername: (x: string)=>void, username: stri
     }
     const data = await response.json();
     setUsername(data.username);
+    localStorage.setItem('username',data.username);
     return true;
   } catch (error) {
     if(error instanceof Error) console.error(error.message);

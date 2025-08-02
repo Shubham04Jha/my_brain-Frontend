@@ -34,10 +34,11 @@ export const Login: React.FC<LoginProps> = ({setIsAuthenticated})=>{
                 body: JSON.stringify(data)
             })
             const parsedResponse = await response.json();
-            if(response.status==200){
+            if(response.ok){
                 toast.success(parsedResponse.message);
                 if(parsedResponse.token){
                     localStorage.setItem('token',`Bearer ${parsedResponse.token}`);
+                    localStorage.setItem('username',data.username as string);
                     setIsAuthenticated(true);
                     setUsername(data.username as string);
                     navigate('/');
