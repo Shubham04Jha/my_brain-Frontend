@@ -12,23 +12,36 @@ const defaultStyles = `outline-2 dark:outline-accent-dark outline-accent-white r
             dark:bg-background-black/90 bg-background-white/90 
 `;
 
-const AddSharedBrainForm = ()=>{
+const FormContainer = ({children}:{children?: React.ReactNode})=>{
     return(
         <div className={`${defaultStyles}`} 
         onClick={(e: React.MouseEvent)=>{e.stopPropagation()}}>
-
+            {children}
         </div>
     )
 }
+
+export const BlurredForm = ({blur,children}: {blur: boolean,children: React.ReactNode})=>{
+    return(
+        <div className="absolute z-11 dark:bg-background-black/50 bg-background-white/50 
+        w-full h-screen flex justify-center items-center">
+            <FormContainer>
+                {children}
+            </FormContainer>
+        </div>
+    )
+}
+
 export const SharedBrains = ()=>{
     const {sharedBrains} = useSharedBrains();
-    const [addingBrain,setAddingBrian] = useState<boolean>();
+    const [addingBrain,setAddingBrian] = useState<boolean>(false);
     return(
         <>
-        {addingBrain&&<div className="absolute z-11 dark:bg-background-black/50 bg-background-white/50 
-        w-full h-screen flex justify-center items-center" onClick={()=>setAddingBrian(false)}>
-            <AddSharedBrainForm />
-        </div>}
+        <BlurredForm blur={addingBrain as boolean} >
+            <FormContainer>
+                
+            </FormContainer>
+        </BlurredForm>
         <div className="h-screen w-full dark:bg-background-black  p-4 flex gap-4">
             {sharedBrains&&sharedBrains.length>0?sharedBrains.map((val,idx)=>{
                 return(
