@@ -4,6 +4,7 @@ import { PlusIcon } from "../assets/icons/plux";
 import { CreateContent } from "../components/createContent";
 import { Posts } from "../components/posts";
 import { SideBar } from "../components/SideBar";
+import { usePosts } from "../hooks/usePosts";
 
 
 
@@ -12,6 +13,7 @@ interface HomeProps {
 }
 
 export const Home = ({showAddContentButton}: HomeProps)=>{
+  const {posts,loading,error,refetch} = usePosts();
   const [sideBarOpen,setSideBarOpen] = useState<boolean>(true);
   const [creatingContent,setCreatingContent] = useState<boolean>(false);
   return(
@@ -22,14 +24,14 @@ export const Home = ({showAddContentButton}: HomeProps)=>{
           <p className='font-bold text-xl'>Open Brain</p> {/*logo */}
         </div>
       }
-      <CreateContent creatingContent={creatingContent} setCreatingContent={setCreatingContent} />
+      <CreateContent refetch={refetch} creatingContent={creatingContent} setCreatingContent={setCreatingContent} />
       
       <div className='grid grid-cols-12 relative'>
 
         <div className={`${sideBarOpen?'col-span-2':''} lg:static absolute `}>
           {<SideBar extended={sideBarOpen} onClick={()=>setSideBarOpen((b)=>!b)}/>}
         </div>
-        <Posts sideBarOpen={sideBarOpen} />
+        <Posts posts={posts} loading={loading} error={error} refetch={refetch} sideBarOpen={sideBarOpen} />
       </div>
 
       {showAddContentButton&&<div className='absolute right-4 bottom-4 w-16 dark:outline-accent-black outline-accent-white

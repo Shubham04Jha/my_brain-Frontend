@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { usePosts } from "../hooks/usePosts";
+import {type Post } from "../hooks/usePosts";
 import { SearchBar } from "./SearchBar";
 import { ContentFolded } from "./ui/ContentFolded";
 import { OpenBrainContext } from "../context";
@@ -7,8 +7,12 @@ import { OpenBrainContext } from "../context";
 
 interface PostsProps{
     sideBarOpen: boolean;
+    posts:Post[];
+    loading:boolean;
+    error:string|null;
+    refetch: ()=>void
 }
-export const Posts: React.FC<PostsProps> =  ({sideBarOpen})=>{
+export const Posts: React.FC<PostsProps> =  ({sideBarOpen, posts, loading, error, refetch})=>{
     return(
         <>
             
@@ -19,14 +23,19 @@ export const Posts: React.FC<PostsProps> =  ({sideBarOpen})=>{
                 overflow-y-auto h-screen scrollbar scrollbar-thumb-gray-500 scrollbar-track-transparent scrollbar-track-sky-300
                 `}>
                 <SearchBar/>
-                <Display />
+                <Display posts={posts} loading={loading} error={error} refetch={refetch} />
             </div>
         </>
     )
 }
 
-const Display = ()=>{
-    const {posts,loading,error,refetch} = usePosts();
+interface DisplayProps{
+    posts:Post[];
+    loading:boolean;
+    error:string|null;
+    refetch: ()=>void
+}
+const Display = ({posts,loading,error,refetch}: DisplayProps)=>{
     const {username} = useContext(OpenBrainContext);
     if (loading) {
         return <div>Loading posts...</div>;

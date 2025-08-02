@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { baseUrl } from "../config"
 
-interface Post{
+export interface Post{
     _id: string;
     link: string;
     type: string;
@@ -51,6 +51,7 @@ export const usePosts = (): {posts: Post[],loading: boolean, error: string|null,
     },[trigger])
 
     const refetch = ()=>{
+        console.log('refetch called')
         setTrigger(b=>!b);
     }
 

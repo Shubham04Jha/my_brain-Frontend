@@ -4,13 +4,13 @@ import { Input } from "./ui/Input";
 import { Check } from "../assets/icons/check";
 import { baseUrl } from "../config";
 import { toast } from "react-toastify";
-import { usePosts } from "../hooks/usePosts";
 
 
 
 interface CreateContentProps{
     creatingContent: boolean;
     setCreatingContent: (x: boolean)=>void;
+    refetch: ()=>void;
 }
 const defaultStles = `outline-2 dark:outline-accent-dark outline-accent-white rounded-lg
              h-96 w-96 overflow-y-auto
@@ -19,8 +19,7 @@ const defaultStles = `outline-2 dark:outline-accent-dark outline-accent-white ro
             absolute z-20
             dark:bg-background-black/90 bg-background-white/90 
 `;
-export const CreateContent: React.FC<CreateContentProps> = ({creatingContent,setCreatingContent})=>{
-    const {refetch} = usePosts();
+export const CreateContent: React.FC<CreateContentProps> = ({creatingContent,setCreatingContent, refetch})=>{
     const LinkRef = useRef<HTMLInputElement>(null);
     const TitleRef = useRef<HTMLInputElement>(null);
     const ThoughtsRef = useRef<HTMLTextAreaElement>(null);
