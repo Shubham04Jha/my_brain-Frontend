@@ -4,6 +4,7 @@ import { Input } from "./ui/Input";
 import { Check } from "../assets/icons/check";
 import { baseUrl } from "../config";
 import { toast } from "react-toastify";
+import { usePosts } from "../hooks/usePosts";
 
 
 
@@ -19,8 +20,10 @@ const defaultStles = `outline-2 dark:outline-accent-dark outline-accent-white ro
             dark:bg-background-black/90 bg-background-white/90 
 `;
 export const CreateContent: React.FC<CreateContentProps> = ({creatingContent,setCreatingContent})=>{
+    const {refetch} = usePosts();
     const LinkRef = useRef<HTMLInputElement>(null);
     const TitleRef = useRef<HTMLInputElement>(null);
+    const ThoughtsRef = useRef<HTMLTextAreaElement>(null);
 
     const identifyType = (link: string): string | null =>{
         const allowedTypes = ['www.youtube.com','youtu.be','www.x.com','x.com','www.twitter.com'];
@@ -40,12 +43,11 @@ export const CreateContent: React.FC<CreateContentProps> = ({creatingContent,set
     }
     const handleSubmit = async ()=>{
         try {
-            console.log('click');
             const data = {
                 title: TitleRef.current?.value||'',
                 type: identifyType(LinkRef.current?.value||''),
                 link: LinkRef.current?.value||'',
-                thoughts:'',
+                thoughts:ThoughtsRef.current?.value||'',
             }
             const response = await fetch(`${baseUrl}/content`,{
                 method:'post',
@@ -58,6 +60,7 @@ export const CreateContent: React.FC<CreateContentProps> = ({creatingContent,set
             if(response.ok){
                 toast.success('Succesfully uploaded',{autoClose:1000});
                 setCreatingContent(false);
+                refetch();
             }else{
                 const parseRespone = await response.json();
                 toast.error('Failed to upload',{autoClose:1500});
@@ -85,7 +88,7 @@ export const CreateContent: React.FC<CreateContentProps> = ({creatingContent,set
                     <Input ref={LinkRef} type="text" placeholder="Link" additionalStyles="w-full" />
                     <Input ref={TitleRef} type="text" placeholder="Title" additionalStyles="w-full" />
                     {/* <div className="bg-green-200 h-144"></div> */}
-                    <Input type="textBox" placeholder="Thoughts..?" additionalStyles="w-full min-h-24 max-h-144" />
+                    <Input ref={ThoughtsRef} type="textBox" placeholder="Thoughts..?" additionalStyles="w-full min-h-24 max-h-144" />
                     <div className=" w-8 text-green-400 hover:outline-1 outline-green-400 rounded-lg absolute right-1 bottom-1
                     hover:cursor-pointer pl-1 pt-1"
                     onClick={()=>handleSubmit()}><Check/></div>

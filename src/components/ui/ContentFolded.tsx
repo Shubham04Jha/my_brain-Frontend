@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Eye } from "../../assets/icons/eye";
 import { useSetPublic } from "../../hooks/useSetPublic";
+import {Tweet} from "react-tweet";
 
 interface ContentFoldedProps{
     link: string;
@@ -69,7 +70,7 @@ function extractTweetId(rawUrl: string): string | null{
 }
 
 const handleHost = (link: string): string=>{
-    const {host,pathname,search, hash, searchParams} = new URL(link);
+    const {host} = new URL(link);
     switch (host) {
         case 'youtu.be':
         case 'www.youtube.com':
@@ -87,17 +88,14 @@ const LinkEmbed = ({link,type}:{link:string,type: string})=>{
     switch (type) {
         case 'youtube':
             return(
-                <div className="w-full">
+                <div className="w-full static">
                     <iframe className="w-full h-full" src={`https://www.youtube.com/embed/${resource_id}`} title="YouTube video player"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
                 </div>
             )
         case 'x':
             return(
-                <div className="w-full h-full">
-                    <blockquote data-theme="" className="twitter-tweet"> 
-                        <a href={`https://twitter.com/username/status/${resource_id}`}></a>
-                    </blockquote> 
-                    <script async src="https://platform.twitter.com/widgets.js" charSet="utf-8"></script>
+                <div className="w-full h-full static">
+                    <Tweet id={resource_id}  />
                 </div>
             )
         default:
@@ -108,6 +106,7 @@ const LinkEmbed = ({link,type}:{link:string,type: string})=>{
             )
     }
 }
+
 export const ContentFolded = ({link,type,tags,thoughts,title,username,isOwner,isPublic,contentId}:ContentFoldedProps)=>{
     const [visible,setVisible] = useState<boolean>(isPublic);
     const {setPublic} = useSetPublic();
@@ -126,7 +125,9 @@ export const ContentFolded = ({link,type,tags,thoughts,title,username,isOwner,is
                 <p>Added By: {username}</p>
                 <hr className=" dark:text-accent-dark text-accent-white"/>
             </div>
-            <LinkEmbed link={link} type={type}/>
+            <div className="min-h-[200px] ">
+                <LinkEmbed link={link} type={type}/>
+            </div>
             <div className="relative flex-grow " >
                 <p className="focus:outline-1 dark:outline-accent-black outline-accent-white rounded-md p-1  
                 whitespace-pre-line " tabIndex={-1}>{thoughts}</p>
