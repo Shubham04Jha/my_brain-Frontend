@@ -9,6 +9,7 @@ import { BrainLogo } from "../assets/icons/logo";
 import {LogoutLogo} from "../assets/icons/logout";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { baseFrontEnd } from "../config";
 
 
 interface SideBarProps{
@@ -34,7 +35,6 @@ const textToIcon: IconMap = {
     'Share Brain': ShareIcon,
     'Logout': LogoutLogo
 }
-
 type textToFunctionType={
     [key in IconNames]: ()=>void;
 }
@@ -50,7 +50,7 @@ const Options = ()=>{
             navigate('/shared')
         },
         'Share Brain': async ()=>{
-            await navigator.clipboard.writeText('http://localhost:3000/api/v1/share/'+localStorage.getItem('username'));
+            await navigator.clipboard.writeText(`${baseFrontEnd}/shared/`+localStorage.getItem('username'));
             toast.success('Brain Link Copied!',{autoClose:2000});
         },
         'Logout': ()=>{

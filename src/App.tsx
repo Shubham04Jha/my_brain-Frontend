@@ -10,6 +10,7 @@ import { PageNotFound } from './pages/PageNotFound';
 import { Home } from './pages/Home';
 import { OpenBrainContext, OpenBrainProvider } from './context';
 import { SharedBrains } from './pages/SharedBrain';
+import { DetailedSharedBrain } from './pages/DetailedSharedBrain';
 
 const ProtectedRoute = ({isAuthenticated,isLoading}: {isAuthenticated: boolean,isLoading: boolean})=>{
   if (isLoading) {
@@ -82,6 +83,7 @@ function AppContent() {
           <Route path='/' element={<Home showAddContentButton={true}/>}/>
           <Route path='/profile' element={<></>} />
           <Route path='/shared' element={<SharedBrains />  } />
+          <Route path='/shared/:username' element={<DetailedSharedBrain />  } />
         </Route>
         <Route path='*' element ={<PageNotFound/>}/>
       </Routes>

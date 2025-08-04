@@ -8,6 +8,7 @@ import { Input } from "../components/ui/Input";
 import { Button } from "../components/ui/Button";
 import { baseUrl } from "../config";
 import { toast } from "react-toastify";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export const Form = ({closeFunction}: {closeFunction: ()=>void})=>{
     const linkRef = useRef<HTMLInputElement>(null);
@@ -74,6 +75,7 @@ export const Form = ({closeFunction}: {closeFunction: ()=>void})=>{
 export const SharedBrains = ()=>{
     const {sharedBrains,refetch} = useSharedBrains();
     const [addingBrain,setAddingBrian] = useState<boolean>(false);
+    const navigate = useNavigate();
     return(
         <>
         <BlurredForm blurBackground={addingBrain as boolean} handleClick={()=>{setAddingBrian(false)}}>
@@ -85,7 +87,9 @@ export const SharedBrains = ()=>{
         <div className="h-screen w-full dark:bg-background-black  p-4 flex gap-4">
             {sharedBrains&&sharedBrains.length>0?sharedBrains.map((val,idx)=>{
                 return(
-                    <div className="w-24 h-24 bg-background-grey-300" key={idx}>
+                    <div className="outline-1 dark:outline-accent-black outline-accent-white w-24 h-24 bg-background-grey-300
+                    flex justify-center items-center hover:cursor-pointer" key={idx}
+                    onClick={()=>{navigate(`/shared/${val}`)}}>
                         {val}
                     </div>
                 )
