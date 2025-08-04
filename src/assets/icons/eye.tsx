@@ -17,7 +17,7 @@ interface EyeProps{
 }
 export const Eye = ({
     isPublic,
-    width='w-8'
+    width='w-full'
 }:EyeProps)=>{
     return(
         <div className={`${defaultStyles} ${width}`}>

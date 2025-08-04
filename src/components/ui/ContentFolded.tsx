@@ -119,7 +119,11 @@ export const ContentFolded = ({link,type,tags,thoughts,title,username,isOwner,is
             {tags&&<div className="flex gap-2">{tags.map((tag,idx)=><p key={idx} className="dark:text-accent-black text-accent-white">#{tag}</p>)}</div>}
             <div className="flex gap-2 justify-center">
                 <p className=" text-2xl dark:outline-accent-black outline-accent-white rounded-md items-center ">{title}</p>
-                {isOwner&&<div className="hover:cursor-pointer flex items-center -mb-1 w-6" onClick={handleVisible}><Eye isPublic={visible} /></div>}
+                {isOwner&&<div className="hover:cursor-pointer flex items-center -mb-1 w-6" onClick={handleVisible}>
+                        <div className="w-6">
+                            <Eye isPublic={visible} />
+                        </div>
+                    </div>}
             </div>
             <div className="mb-2">
                 <p>Added By: {username}</p>

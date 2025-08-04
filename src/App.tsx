@@ -81,10 +81,9 @@ function AppContent() {
         <Route path='login' element={<Login setIsAuthenticated={setIsAuthenticated}/>}/>
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} isLoading={isLoading} />}>
           <Route path='/' element={<Home showAddContentButton={true}/>}/>
-          <Route path='/profile' element={<></>} />
           <Route path='/shared' element={<SharedBrains />  } />
-          <Route path='/shared/:username' element={<DetailedSharedBrain />  } />
         </Route>
+        <Route path='/shared/:username' element={<DetailedSharedBrain />  } />
         <Route path='*' element ={<PageNotFound/>}/>
       </Routes>
     </BrowserRouter>
