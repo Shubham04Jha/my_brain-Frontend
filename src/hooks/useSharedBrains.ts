@@ -5,6 +5,7 @@ export const useSharedBrains = ()=>{
     const [sharedBrains,setSharedBrains] = useState<string[] | null> (null);
     const [error,setError] = useState<string|null>(null);
     const [loading,setLoading] = useState<boolean>(false);
+    const [temp, setTemp] = useState<boolean>(false);
     useEffect(()=>{
         const getUsers = async(): Promise<void> =>{
             try {
@@ -37,6 +38,10 @@ export const useSharedBrains = ()=>{
             }
         }
         getUsers();
-    },[])
-    return {sharedBrains,loading,error}
+    },[temp]);
+    const refetch = ()=>{
+        setTemp(b=>!b);
+    }
+
+    return {sharedBrains,loading,error,refetch}
 }

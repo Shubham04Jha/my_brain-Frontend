@@ -46,7 +46,9 @@ const Options = ()=>{
             navigate('/');
         },
         'Profile': ()=>{},
-        'Shared Brains': ()=>{},
+        'Shared Brains': ()=>{
+            navigate('/shared')
+        },
         'Share Brain': async ()=>{
             await navigator.clipboard.writeText('http://localhost:3000/api/v1/share/'+localStorage.getItem('username'));
             toast.success('Brain Link Copied!',{autoClose:2000});

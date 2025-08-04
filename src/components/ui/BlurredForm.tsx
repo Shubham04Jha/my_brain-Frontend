@@ -16,9 +16,9 @@ const FormContainer = ({children}:{children?: React.ReactNode})=>{
     )
 }
 
-export const BlurredForm = ({blur,children,handleClick}: {blur: boolean,children?: React.ReactNode,handleClick: ()=>void})=>{
+export const BlurredForm = ({blurBackground,children,handleClick}: {blurBackground: boolean,children?: React.ReactNode,handleClick: ()=>void})=>{
     return(
-        blur&&<div className="absolute z-11 dark:bg-background-black/50 bg-background-white/50 
+        blurBackground&&<div className="absolute z-11 dark:bg-background-black/50 bg-background-white/50 
         w-full h-screen flex justify-center items-center" onClick={handleClick}>
             <FormContainer>
                 {children}
