@@ -66,6 +66,7 @@ export const Button = ({
             onClick={onClick}
             className={`${additionalStyles} dark:bg-primary-dark bg-primary-white 
             hover:border-2 
+            hover:cursor-pointer
             font-semibold
             hover-ring-border-subtle 
             flex justify-start px-1 gap-1 items-center pb-1`}>

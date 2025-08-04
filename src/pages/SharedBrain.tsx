@@ -39,19 +39,18 @@ export const Form = ({closeFunction}: {closeFunction: ()=>void})=>{
             if(response.ok){
                 const parsedResponse = await response.json();
                 toast.success(parsedResponse.message||'successfully added the brain',{autoClose:1500});
+                closeFunction();
             }else{
                 const parsedResponse = await response.json();
                 console.error(parsedResponse.message);
-                toast.error('couldn\'d add brain');
+                toast.error(parsedResponse.message||'couldn\'d add brain');
             }
         } catch (error) {
             if(error instanceof Error ) console.error(error.message);
             else console.log('unexpected error occured');
-        }finally{
-            closeFunction();
         }
     }
-    const shareTypeStyle = ` dark:outline-accent-black outline-accent-white`
+    const shareTypeStyle = `hover:cursor-pointer dark:outline-accent-black outline-accent-white`
     return(
         <div>
             <div className="flex p-1 gap-4">
