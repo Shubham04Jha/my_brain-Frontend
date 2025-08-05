@@ -1,5 +1,5 @@
 # todos\
-- Generalise Home component or atleast teh content viewer...
+- Add teh public private design consistency..
 - Trim request names.
 - A way to just append the new posts refetch is cool but it just loads the whole thing which isn't even required... have to learn it... or maybe some library might exists that does just that? or i can create one... cool side project. 
 - And ofc Lazy loading would be really great.

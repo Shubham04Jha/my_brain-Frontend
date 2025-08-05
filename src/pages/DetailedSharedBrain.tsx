@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { Home } from './Home';
 import {  Posts } from '../components/posts';
 import { type Post } from '../hooks/usePosts';
+import { BrainLogo } from '../assets/icons/logo';
 
 export const DetailedSharedBrain = () => {
   const { username } = useParams();
@@ -55,7 +56,13 @@ export const DetailedSharedBrain = () => {
     )
   }
   return (
+    <>
+    <div className='absolute top-2 left-12 flex gap-2'>
+          <div className='w-8'>< BrainLogo /></div>
+          <p className='font-bold text-xl'>Open Brain</p> {/*logo */}
+    </div>
     <Posts posts={posts} loading={loading} error={error} refetch={()=>setToggle(b=>!b)} sideBarOpen={false} />
+    </>
   );
 //  return <div>This is  {username}'s Brian</div>
 };
