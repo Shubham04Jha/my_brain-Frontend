@@ -1,5 +1,5 @@
 # todos\
-- Add teh public private design consistency..
+- Remove eye button from the detailedPosts Page folded contents (eye appears only when the logged in user tries to see how the publicly available posts appear); and allows changing the status as long as you dont refresh (in which case you have to change from home).
 - Trim request names.
 - A way to just append the new posts refetch is cool but it just loads the whole thing which isn't even required... have to learn it... or maybe some library might exists that does just that? or i can create one... cool side project. 
 - And ofc Lazy loading would be really great.
