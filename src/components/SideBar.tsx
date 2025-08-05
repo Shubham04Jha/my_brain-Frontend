@@ -109,7 +109,7 @@ const Options = ()=>{
                         </div>
                         {key=='Home'&&
                             <div key={'public private'} className="w-3/4" onClick={handlePublic}>
-                                <Button variant='regular' additionalStyles={`w-full rounded-md text-sm min-h-8 hover:cursor-pointer `} iconContainerStyle={`w-6 `} startIcon={<Eye isPublic={!isPublic} />} text={isPublic?'Unshare Publics':'Share Publics'} />
+                                <Button variant='regular' additionalStyles={`w-full rounded-md text-sm min-h-8 hover:cursor-pointer `} iconContainerStyle={`w-6 `} startIcon={<Eye isPublic={isPublic} />} text={'Publics'} />
                             </div>
                         }
                         </>
