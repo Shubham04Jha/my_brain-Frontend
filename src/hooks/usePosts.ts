@@ -16,7 +16,7 @@ export interface Post{
     tags?: string[]
 }
 
-export const usePosts = (): {posts: Post[],loading: boolean, error: string|null, refetch: ()=>void} =>{
+export const usePosts = (username?: string): {posts: Post[],loading: boolean, error: string|null, refetch: ()=>void} =>{
     const[posts,setPosts] = useState<Post[]>([]);
     const[loading,setLoading] = useState<boolean>(false);
     const[error,setError] = useState<string|null>(null);

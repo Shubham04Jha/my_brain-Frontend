@@ -35,8 +35,9 @@ interface DisplayProps{
     error:string|null;
     refetch: ()=>void
 }
-const Display = ({posts,loading,error,refetch}: DisplayProps)=>{
+export const Display = ({posts,loading,error,refetch}: DisplayProps)=>{
     const {username} = useContext(OpenBrainContext);
+    console.log(posts.length);
     if (loading) {
         return <div>Loading posts...</div>;
     }

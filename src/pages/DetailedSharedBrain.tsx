@@ -3,11 +3,15 @@ import { useParams } from 'react-router-dom';
 import { baseUrl } from '../config';
 import { toast } from 'react-toastify';
 import { Home } from './Home';
+import {  Posts } from '../components/posts';
+import { type Post } from '../hooks/usePosts';
 
 export const DetailedSharedBrain = () => {
   const { username } = useParams();
   const [loading,setLoading] = useState<boolean>(false);
   const [error,setError] = useState<string|null>(null);
+  const [posts,setPosts] = useState<Post[]>([]);
+  const [toggle,setToggle] = useState<boolean>();
   useEffect(()=>{
     const func = async ()=>{
         try {
@@ -24,6 +28,7 @@ export const DetailedSharedBrain = () => {
                 return;
             }
             const parsedResponse =  await response.json();
+            setPosts(parsedResponse.content);
             setError(null);
             console.log(parsedResponse.content);
             
@@ -35,7 +40,7 @@ export const DetailedSharedBrain = () => {
         }
     }
     func();
-  },[])
+  },[toggle]);
   if(loading){
     return(
         <div className='w-full h-screen flex justify-center items-center'>
@@ -49,6 +54,8 @@ export const DetailedSharedBrain = () => {
         </div>
     )
   }
-//   return <Home />;
- return <div>This is  {username}'s Brian</div>
+  return (
+    <Posts posts={posts} loading={loading} error={error} refetch={()=>setToggle(b=>!b)} sideBarOpen={false} />
+  );
+//  return <div>This is  {username}'s Brian</div>
 };
