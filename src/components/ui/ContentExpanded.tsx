@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Eye } from "../../assets/icons/eye";
 import { Edit } from "../../assets/icons/edit";
 import { Check } from "../../assets/icons/check";
@@ -54,20 +54,56 @@ const Display = ({isOwner, title,createdAt,isPublic,tags, thoughts, type, link,u
     const [text,setText] = useState(thoughts);
     const [visible,setVisible] = useState(isPublic);
     const [editable,setEditable] = useState(false);
+    const [titleText,setTitle] = useState<string>(title);
+    const [editTitle,setEditTitle] = useState<boolean>(false);
     const date = new Date(createdAt).toDateString()||'';
+    const titleRef = useRef<HTMLInputElement>(null);
+    const thoughtsRef = useRef<HTMLTextAreaElement>(null);
+    useEffect(()=>{
+       if(editTitle) titleRef.current?.focus();
+    },[editTitle]);
+    useEffect(()=>{
+            if (editable && thoughtsRef.current) {
+            const el = thoughtsRef.current;
+            el.focus();
+            el.setSelectionRange(el.value.length, el.value.length);
+            el.scrollTop = el.scrollHeight;
+        }
+    },[editable]);
     return(
         <>
-        {isOwner&&<div className="w-8 h-8 flex items-center justify-center
-        absolute top-4 right-4 hover:cursor-pointer 
-        rounded-lg outline-2 dark:outline-accent-white outline-accent-white ">
-            <Edit width="w-6"  />
-        </div>}
         <div className="w-full px-4">
             {tags&&<div className="flex gap-2">
                 {tags.map((val,idx)=>val)}
             </div>}
-            <p className="mb-8
-            hover:cursor-pointer text-2xl dark:outline-accent-black outline-accent-white rounded-md items-center ">{title}</p>
+            {editTitle?
+                <div className="flex justify-between">
+                    <div>
+                        <input className="mb-8
+                        focus:outline-1
+                        hover:cursor-pointer text-2xl dark:outline-accent-black outline-accent-white rounded-md items-center " type="text" value={titleText} 
+                        onChange={(e) =>{ setTitle(e.target.value);}}
+                        ref={titleRef}/>
+                    </div>
+                    <div className="outline-1 dark:outline-accent-black outline-accent-white p-2 rounded-md inline-flex ml-auto
+                        hover:cursor-pointer h-10
+                        aspect-square "
+                        onClick={()=>{setEditTitle(false);}}>{<Check width="w-6"/>}
+                    </div>
+                </div>
+                :
+                <div className="flex justify-between">
+                    <p className="mb-8
+                    hover:cursor-pointer text-2xl dark:outline-accent-black outline-accent-white rounded-md items-center ">{titleText}
+                    </p>
+                    {isOwner&&
+                    <div className="h-10 outline-1 dark:outline-accent-black outline-accent-white p-2 rounded-md inline-flex ml-auto
+                        hover:cursor-pointer
+                        aspect-square"
+                        onClick={()=>setEditTitle(true)}>{<Edit width="w-6"/>}
+                    </div>}
+                </div>
+                }
             <div className="flex justify-between">
                 <p>Added by: {username}</p>
                 {isOwner&&<div><p>{visible?'eye':'no eye'}  {isPublic?'public':'private'}</p></div>}
@@ -76,9 +112,32 @@ const Display = ({isOwner, title,createdAt,isPublic,tags, thoughts, type, link,u
             <div className="mx-auto p-2 lg:w-1/2">
                 <LinkEmbed link={link} type={type}/>
             </div>
-            <div className="relative flex-grow " >
-                <p className="focus:outline-1 dark:outline-accent-black outline-accent-white rounded-md p-1  
-                whitespace-pre-line " tabIndex={-1}>{text}</p>
+            <div className="outline-1 dark:outline-accent-black outline-accent-white p-2 rounded-md flex flex-col">
+                {editable?
+                    <>
+                        <textarea
+                            className="h-50 resize-none outline-none border-none bg-transparent
+                            custom-scrollbar"
+                            value={text}
+                            onChange={(e) => setText(e.target.value)}
+                            ref={thoughtsRef}
+                        />
+                        <div className=" outline-1 dark:outline-accent-black outline-accent-white p-2 rounded-md inline-flex ml-auto
+                            aspect-square hover:cursor-pointer"
+                            onClick={()=>setEditable(false)}>{<Check width="w-4"/>}
+                        </div>
+                    </>
+                :
+                <>
+                    <p className=" h-50 whitespace-pre-line custom-scrollbar">{text}</p>
+                    {isOwner&&
+                    <div className=" outline-1 dark:outline-accent-black outline-accent-white p-2 rounded-md inline-flex ml-auto
+                        hover:cursor-pointer
+                        aspect-square "
+                        onClick={()=>setEditable(true)}>{<Edit width="w-6"/>}
+                    </div>}
+                </>
+                }
             </div>
         </div>
         </>
