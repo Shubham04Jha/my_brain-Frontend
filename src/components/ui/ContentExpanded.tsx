@@ -2,68 +2,77 @@ import { useState } from "react";
 import { Eye } from "../../assets/icons/eye";
 import { Edit } from "../../assets/icons/edit";
 import { Check } from "../../assets/icons/check";
-
-interface ContentExpandedProps{
-    tags?: string[];
-    thoughts?: string;
-    title: string;
-    link: string;
-    type: string;
-    username: string;
-    createdAt: number;
-    isPublic?: boolean;
-    isOwner?:boolean
-}
+import { useParams } from "react-router-dom";
+import { useContent, type Content } from "../../hooks/useContent";
 
 const defaultStyles = `dark:bg-background-black bg-background-white 
 w-full p-4 outline-2 rounded-2xl inline-flex shadow-lg dark:shadow-accent-black shadow-accent-white`
-export const ContentExpanded = ({
-    tags, thoughts, 
-    title, link, type, 
-    username, createdAt, 
-    isPublic, isOwner
-}: ContentExpandedProps)=>{
-    const [text,setText] = useState(thoughts);
-    const [visible,setVisible] = useState(isPublic)
-    const [editable,setEditable] = useState(false);
+export const ContentExpanded = ()=>{
+    const {contentId} = useParams();
+    if(!contentId){
+        return <BadUrl />;
+    }
+    const {loading,refetch,userId, ...props} = useContent(contentId);
+    const {username} = userId||{};
     return(
-        <div className={`${defaultStyles} gap-y-4 flex-col flex`}>
-            {tags&&<div className="flex gap-2 dark:text-gray-300 text-gray-600">{tags.map((tag,idx)=>{return <p key={idx}>#{tag}</p>})}</div>}
-            <div className="flex gap-4 ">
-                <a href={`${link}` } target="_blank" className="underline dark:text-accent-black text-accent-white">Content Link</a>
-                <p>{`Type: ${type}`}</p>
+        <>
+            {loading?<Loading />:<Display isOwner={username==localStorage.getItem('username')} username={username} {...props}/>}
+        </>
+    )
+}
+const BadUrl = ()=>{
+    return(
+        <div>
+            Bad URL ...
+        </div>
+    )
+}
+
+interface DisplayInterface
+    {
+    title: string, createdAt: number, isPublic: boolean,
+    tags?: string[], thoughts?: string,type: string, link: string 
+    isOwner: boolean;
+    username: string;
+}
+const Display = ({isOwner, title,createdAt,isPublic,tags, thoughts, type, link,username}: DisplayInterface)=>{
+    const [text,setText] = useState(thoughts);
+    const [visible,setVisible] = useState(isPublic);
+    const [editable,setEditable] = useState(false);
+    const date = new Date(createdAt).toDateString()||'';
+    return(
+        <>
+        {isOwner&&<div className="w-6
+        absolute bottom-4 right-4 hover:cursor-pointer 
+        rounded-full">
+            <Edit/></div>}
+        <div className="w-full">
+            {tags&&<div className="flex gap-2">
+                {tags.map((val,idx)=>val)}
+            </div>}
+            <p className="hover:cursor-pointer text-xl dark:outline-accent-black outline-accent-white rounded-md items-center ">{title}</p>
+            <div className="flex justify-between">
+                <p>Added by: {username}</p>
+                {isOwner&&<div><p>{visible?'eye':'no eye'}  {isPublic?'public':'private'}</p></div>}
             </div>
-            <p>{username}</p>
-            <p>{new Date(createdAt).toDateString()}</p>
-            <div className="flex justify-center gap-4 items-center ">
-                <p className={`p-2 text-4xl dark:outline-accent-black outline-accent-white rounded-md items-center `}>{title}</p>
-                {isOwner&&<div onClick={()=>setVisible(b=>!b)} className="hover:cursor-pointer"><Eye width="w-8 -mb-2" isPublic={visible} /></div>}
+            <p>Created: {date}</p>
+            <div>
+                {type}
+                {link}
             </div>
-            <div className="outline-1 dark:outline-accent-black outline-accent-white p-2 rounded-md flex flex-col">
-                {editable?
-                    <>
-                        <textarea
-                            className="h-50 resize-none outline-none border-none bg-transparent"
-                            value={text}
-                            onChange={(e) => setText(e.target.value)}
-                        />
-                        <div className=" outline-1 dark:outline-accent-black outline-accent-white p-2 rounded-md inline-flex ml-auto
-                            aspect-square hover:cursor-pointer"
-                            onClick={()=>setEditable(false)}>{<Check width="w-4"/>}
-                        </div>
-                    </>
-                :
-                <>
-                    <p className=" h-50 whitespace-pre-line">{text}</p>
-                    {isOwner&&
-                    <div className=" outline-1 dark:outline-accent-black outline-accent-white p-2 rounded-md inline-flex ml-auto
-                        hover:cursor-pointer
-                        aspect-square"
-                        onClick={()=>setEditable(true)}>{<Edit width="w-6"/>}
-                    </div>}
-                </>
-                }
+            <div className="relative flex-grow " >
+                <p className="focus:outline-1 dark:outline-accent-black outline-accent-white rounded-md p-1  
+                whitespace-pre-line " tabIndex={-1}>{text}</p>
             </div>
+        </div>
+        </>
+    )
+}
+
+const Loading = ()=>{
+    return(
+        <div>
+            Loading the contents
         </div>
     )
 }

@@ -11,9 +11,10 @@ export interface Post{
     userId:{
         _id: string,
         username: string
-    },
-    thoughts:string,
-    tags?: string[]
+    };
+    thoughts:string;
+    tags?: string[];
+    createdAt: number;
 }
 
 export const usePosts = (username?: string): {posts: Post[],loading: boolean, error: string|null, refetch: ()=>void} =>{

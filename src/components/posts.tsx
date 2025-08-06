@@ -37,7 +37,7 @@ interface DisplayProps{
 }
 export const Display = ({posts,loading,error,refetch}: DisplayProps)=>{
     const {username} = useContext(OpenBrainContext);
-    console.log(posts.length);
+    // console.log(posts.length);
     if (loading) {
         return <div>Loading posts...</div>;
     }
@@ -53,7 +53,7 @@ export const Display = ({posts,loading,error,refetch}: DisplayProps)=>{
         posts.length>0?posts.map((post,idx)=>{
             const Postusername = post.userId.username;
             return(
-                <Post link={post.link} type={post.type} title={post.title} username={username} thoughts={post.thoughts} tags={post.tags} isOwner={username==Postusername} isPublic={post.isPublic} contentId={post._id} key={idx}/>
+                <Post createdAt={post.createdAt} link={post.link} type={post.type} title={post.title} username={username} thoughts={post.thoughts} tags={post.tags} isOwner={username==Postusername} isPublic={post.isPublic} contentId={post._id} key={idx}/>
             )
         })
         :<NoContent/>
@@ -78,6 +78,7 @@ interface PostProps{
     thoughts:string;
     tags?:string[];
     contentId: string;
+    createdAt: number;
 } 
 
 const Post = (props:PostProps)=>{

@@ -1,16 +1,16 @@
 import './App.css'
 import { useContext, useEffect, useState } from 'react';
 import { Bounce, ToastContainer } from 'react-toastify';
-import {BrowserRouter, Routes, Route, Outlet, Navigate, useNavigate} from 'react-router-dom';
+import {BrowserRouter, Routes, Route, Outlet, Navigate} from 'react-router-dom';
 
 import { baseUrl } from './config';
 import { Login } from './pages/login';
-import { Posts } from './pages/Test';
 import { PageNotFound } from './pages/PageNotFound';
 import { Home } from './pages/Home';
 import { OpenBrainContext, OpenBrainProvider } from './context';
 import { SharedBrains } from './pages/SharedBrain';
 import { DetailedSharedBrain } from './pages/DetailedSharedBrain';
+import { ContentExpanded } from './components/ui/ContentExpanded';
 
 const ProtectedRoute = ({isAuthenticated,isLoading}: {isAuthenticated: boolean,isLoading: boolean})=>{
   if (isLoading) {
@@ -84,6 +84,7 @@ function AppContent() {
           <Route path='/shared' element={<SharedBrains />  } />
         </Route>
         <Route path='/shared/:username' element={<DetailedSharedBrain />  } />
+        <Route path='/content/:contentId' element={<ContentExpanded />} />
         <Route path='*' element ={<PageNotFound/>}/>
       </Routes>
     </BrowserRouter>

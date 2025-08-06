@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Eye } from "../../assets/icons/eye";
 import { useSetPublic } from "../../hooks/useSetPublic";
 import {Tweet} from "react-tweet";
+import { OpenBookIcon } from "../../assets/icons/open";
+import { useNavigate } from "react-router-dom";
 
 interface ContentFoldedProps{
     link: string;
@@ -110,15 +112,20 @@ const LinkEmbed = ({link,type}:{link:string,type: string})=>{
 export const ContentFolded = ({link,type,tags,thoughts,title,username,isOwner,isPublic,contentId}:ContentFoldedProps)=>{
     const [visible,setVisible] = useState<boolean>(isPublic);
     const {setPublic} = useSetPublic();
+    const navigate = useNavigate();
     const handleVisible = async ()=>{
         const data = await setPublic(contentId,visible);
         setVisible(data);
     }
+    const handleOpen = ()=>navigate(`/content/${contentId}`);
     return (
         <div className={`${defaultStyles} `}>
             {tags&&<div className="flex gap-2">{tags.map((tag,idx)=><p key={idx} className="dark:text-accent-black text-accent-white">#{tag}</p>)}</div>}
-            <div className="flex gap-2 justify-center">
-                <p className=" text-2xl dark:outline-accent-black outline-accent-white rounded-md items-center ">{title}</p>
+            <div className="flex gap-2 justify-between">
+                <div className="min-w-6 max-w-6 hover:cursor-pointer" onClick={handleOpen}>
+                    <OpenBookIcon />
+                </div>
+                <p onClick={handleOpen} className="hover:cursor-pointer text-xl dark:outline-accent-black outline-accent-white rounded-md items-center ">{title}</p>
                 {isOwner&&<div className="hover:cursor-pointer flex items-center -mb-1 w-6" onClick={handleVisible}>
                         <div className="w-6">
                             <Eye isPublic={visible} />
