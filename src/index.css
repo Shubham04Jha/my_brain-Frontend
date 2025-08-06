@@ -25,3 +25,11 @@
     --color-gray: #424843;
     --color-gray-dark: #0E0F0E;
 }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer components {
+  .custom-scrollbar {
+    @apply overflow-y-auto scrollbar scrollbar-thumb-gray-500 scrollbar-track-transparenty;
+  }
+}
