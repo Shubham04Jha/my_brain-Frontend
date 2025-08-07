@@ -65,9 +65,12 @@ export const ContentExpanded = ()=>{
 }
 const BadUrl = ()=>{
     return(
-        <div>
-            Bad URL ...
+        <>
+        <div className="absolute top-4 left-4">
+            <OpenBrainLogo />
         </div>
+        url is corrupted
+        </>
     )
 }
 

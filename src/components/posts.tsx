@@ -3,6 +3,7 @@ import {type Post } from "../hooks/usePosts";
 import { SearchBar } from "./SearchBar";
 import { ContentFolded } from "./ui/ContentFolded";
 import { OpenBrainContext } from "../context";
+import { OpenBrainLogo } from "./ui/brainlogo";
 
 
 interface PostsProps{
@@ -39,14 +40,26 @@ export const Display = ({posts,loading,error,refetch}: DisplayProps)=>{
     const {username} = useContext(OpenBrainContext);
     // console.log(posts.length);
     if (loading) {
-        return <div>Loading posts...</div>;
+        return (
+            <>
+                <div className="absolute top-4 left-4">
+                    <OpenBrainLogo />
+                </div>
+                <div>Loading posts...</div>
+            </>
+        );
     }
     if (error) {
         return (
-        <div>
-            <p>Error: {error}</p>
-            <button onClick={refetch}>Retry</button>
-        </div>
+        <>
+            <div className="absolute top-4 left-4">
+                <OpenBrainLogo />
+            </div>
+            <div>
+                <p>Error: {error}</p>
+                <button onClick={refetch}>Retry</button>
+            </div>
+        </>
         );
     }
     return(
@@ -62,9 +75,15 @@ export const Display = ({posts,loading,error,refetch}: DisplayProps)=>{
 
 const NoContent = ()=>{
     return(
+        <>
+        <div className="absolute top-4 left-4">
+            <OpenBrainLogo />
+        </div>
         <div className="col-span-full">
             No Contents yet!
         </div>
+        </>
+        
     )
 }
 

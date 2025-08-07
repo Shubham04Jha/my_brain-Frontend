@@ -48,9 +48,15 @@ export const DetailedSharedBrain = () => {
     )
   }else if(error){
     return(
+        <>
+        <div className="absolute top-4 left-4">
+            <OpenBrainLogo />
+        </div>
         <div className='w-full h-screen flex justify-center items-center'>
             {error}
         </div>
+        </>
+        
     )
   }
   return (
