@@ -9,6 +9,7 @@ import { Button } from "../components/ui/Button";
 import { baseFrontEnd, baseUrl } from "../config";
 import { toast } from "react-toastify";
 import { Navigate, useNavigate } from "react-router-dom";
+import { OpenBrainLogo } from "../components/ui/brainlogo";
 
 export const Form = ({closeFunction}: {closeFunction: ()=>void})=>{
     const linkRef = useRef<HTMLInputElement>(null);
@@ -78,13 +79,16 @@ export const SharedBrains = ()=>{
     const navigate = useNavigate();
     return(
         <>
+        <div className="absolute left-4 top-4">
+            <OpenBrainLogo />
+        </div>
         <BlurredForm blurBackground={addingBrain as boolean} handleClick={()=>{setAddingBrian(false)}}>
             <Form closeFunction={()=>{
                 setAddingBrian(false);
                 refetch()}
             }/>
         </BlurredForm>
-        <div className="h-screen w-full dark:bg-background-black  p-4 flex gap-4">
+        <div className="h-screen w-full dark:bg-background-black p-4 flex gap-4 pt-16">
             {sharedBrains&&sharedBrains.length>0?sharedBrains.map((val,idx)=>{
                 return(
                     <div className="outline-1 dark:outline-accent-black outline-accent-white w-24 h-24 bg-background-grey-300

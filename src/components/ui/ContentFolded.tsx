@@ -48,10 +48,12 @@ export const ContentFolded = ({link,type,tags,thoughts,title,username,isOwner,is
         <div className={`${defaultStyles} `}>
             {tags&&<div className="flex gap-2">{tags.map((tag,idx)=><p key={idx} className="dark:text-accent-black text-accent-white">#{tag}</p>)}</div>}
             <div className="flex gap-2 justify-between">
-                <div className="min-w-6 max-w-6 hover:cursor-pointer" onClick={handleOpen}>
+                <div className="flex gap-2">
+                    <div className="min-w-6 max-w-6 hover:cursor-pointer" onClick={handleOpen}>
                     <OpenBookIcon />
                 </div>
                 <p onClick={handleOpen} className="hover:cursor-pointer text-xl dark:outline-accent-black outline-accent-white rounded-md items-center ">{title}</p>
+                </div>
                 {isOwner&&<div className="hover:cursor-pointer flex items-center -mb-1 w-6" onClick={handleVisible}>
                         <div className="w-6">
                             <Eye isPublic={visible} />

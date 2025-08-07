@@ -131,7 +131,7 @@ const Display = ({isOwner, title,createdAt,isPublic,tags, thoughts, type, link,u
                     <div className="outline-1 dark:outline-accent-black outline-accent-white p-2 rounded-md inline-flex ml-auto
                         hover:cursor-pointer h-10
                         aspect-square -mt-1"
-                        onClick={()=>{setEditTitle(false);editFunc({title:titleText||'',thoughts:thoughts||''})}}>{<Check width="w-6"/>}
+                        onClick={()=>{setEditTitle(false);editFunc({title:titleText||'',thoughts:text||''})}}>{<Check width="w-6"/>}
                     </div>
                 </div>
                 :
@@ -167,7 +167,7 @@ const Display = ({isOwner, title,createdAt,isPublic,tags, thoughts, type, link,u
                         />
                         <div className=" outline-1 dark:outline-accent-black outline-accent-white p-2 rounded-md inline-flex ml-auto
                             aspect-square hover:cursor-pointer"
-                            onClick={()=>{setEditable(false);editFunc({title:titleText||'',thoughts:thoughts||''});}}>{<Check width="w-4"/>}
+                            onClick={()=>{setEditable(false);editFunc({title:titleText||'',thoughts:text||''});}}>{<Check width="w-4"/>}
                         </div>
                     </>
                 :
@@ -189,7 +189,7 @@ const Display = ({isOwner, title,createdAt,isPublic,tags, thoughts, type, link,u
 
 const Loading = ()=>{
     return(
-        <div>
+        <div className="flex justify-center items-center">
             Loading the contents
         </div>
     )

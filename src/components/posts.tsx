@@ -55,7 +55,7 @@ export const Display = ({posts,loading,error,refetch}: DisplayProps)=>{
             <div className="absolute top-4 left-4">
                 <OpenBrainLogo />
             </div>
-            <div>
+            <div className="flex justify-center items-center">
                 <p>Error: {error}</p>
                 <button onClick={refetch}>Retry</button>
             </div>
@@ -76,9 +76,6 @@ export const Display = ({posts,loading,error,refetch}: DisplayProps)=>{
 const NoContent = ()=>{
     return(
         <>
-        <div className="absolute top-4 left-4">
-            <OpenBrainLogo />
-        </div>
         <div className="col-span-full">
             No Contents yet!
         </div>
