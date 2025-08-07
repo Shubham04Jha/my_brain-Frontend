@@ -31,12 +31,13 @@ export const useContent = (contentId: string,isOwner?: boolean)=>{
                     }
                 });
                 const parsedResponse = await response.json();
-                setData(parsedResponse.content as Content);
+                if(!response.ok){
+                    console.log(parsedResponse.message);
+                }else
+                    setData(parsedResponse.content as Content);
             } catch (error) {
-                if(error instanceof Error) console.error(error.message);
-                else{
-                    console.error('Unexpected Exception Occurred');
-                }
+                if(error instanceof Error) console.log('Error message: '+error.message);
+                console.error(error);
             }finally{
                 setLoading(false);
             }

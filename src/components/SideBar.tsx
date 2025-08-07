@@ -106,7 +106,7 @@ const Options = ()=>{
                             <Button variant="regular" additionalStyles={`w-full rounded-md text-sm min-h-8 hover:cursor-pointer `} iconContainerStyle={`w-6`} startIcon={<IconComponent/>} text={key}/>
                         </div>
                         {key=='Home'&&
-                            <div key={'public private'} className="w-3/4" onClick={handlePublic}>
+                            <div key={'public private'+key} className="w-3/4" onClick={handlePublic}>
                                 <Button variant='regular' additionalStyles={`w-full rounded-md text-sm min-h-8 hover:cursor-pointer `} iconContainerStyle={`w-6 `} startIcon={<Eye isPublic={isPublic} />} text={'Publics'} />
                             </div>
                         }
