@@ -1,9 +1,10 @@
 # todos\
-- make the edit function work
+- gpt querying and simple answers as to what I think about it based on the contents that is available.
+- vector database searching.
 - Trim request names.
 - A way to just append the new posts refetch is cool but it just loads the whole thing which isn't even required... have to learn it... or maybe some library might exists that does just that? or i can create one... cool side project. 
 - And ofc Lazy loading would be really great.
-
+- Skeleton loading?.... maybe not
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
