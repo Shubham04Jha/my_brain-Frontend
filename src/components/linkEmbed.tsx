@@ -51,8 +51,7 @@ const handleHost = (link: string): string=>{
     try {
         host = (new URL(link)).host;
     } catch (error) {
-        if(error instanceof Error) console.error(error.message);
-        else console.error('Unexpected Exception Occured');
+        //nothing
     }
     switch (host) {
         case 'youtu.be':

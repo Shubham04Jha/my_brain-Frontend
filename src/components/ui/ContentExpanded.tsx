@@ -3,10 +3,12 @@ import { Eye } from "../../assets/icons/eye";
 import { Edit } from "../../assets/icons/edit";
 import { Check } from "../../assets/icons/check";
 import { useParams } from "react-router-dom";
-import { useContent, type Content } from "../../hooks/useContent";
+import { useContent } from "../../hooks/useContent";
 import { LinkEmbed } from "../linkEmbed";
 import { useSetPublic } from "../../hooks/useSetPublic";
 import { OpenBrainLogo } from "./brainlogo";
+import { useEditContent } from "../../hooks/useEditContent";
+import { toast } from "react-toastify";
 
 const defaultStyles = `dark:bg-background-black bg-background-white `
 
@@ -87,6 +89,7 @@ const Display = ({isOwner, title,createdAt,isPublic,tags, thoughts, type, link,u
     const titleRef = useRef<HTMLInputElement>(null);
     const thoughtsRef = useRef<HTMLTextAreaElement>(null);
 
+    const {editFunc,error} = useEditContent(contentId);
     const {setPublic} = useSetPublic();
     const handleVisible = async ()=>{
         const data = await setPublic(contentId,visible);
@@ -103,6 +106,10 @@ const Display = ({isOwner, title,createdAt,isPublic,tags, thoughts, type, link,u
             el.scrollTop = el.scrollHeight;
         }
     },[editable]);
+    if(error){
+        toast.error(`${error}`,{autoClose:2000});
+        console.error(error);
+    }
     return(
         <>
         <div className="w-full px-4">
@@ -121,7 +128,7 @@ const Display = ({isOwner, title,createdAt,isPublic,tags, thoughts, type, link,u
                     <div className="outline-1 dark:outline-accent-black outline-accent-white p-2 rounded-md inline-flex ml-auto
                         hover:cursor-pointer h-10
                         aspect-square -mt-1"
-                        onClick={()=>{setEditTitle(false);}}>{<Check width="w-6"/>}
+                        onClick={()=>{setEditTitle(false);editFunc({title:titleText||'',thoughts:thoughts||''})}}>{<Check width="w-6"/>}
                     </div>
                 </div>
                 :
@@ -157,7 +164,7 @@ const Display = ({isOwner, title,createdAt,isPublic,tags, thoughts, type, link,u
                         />
                         <div className=" outline-1 dark:outline-accent-black outline-accent-white p-2 rounded-md inline-flex ml-auto
                             aspect-square hover:cursor-pointer"
-                            onClick={()=>setEditable(false)}>{<Check width="w-4"/>}
+                            onClick={()=>{setEditable(false);editFunc({title:titleText||'',thoughts:thoughts||''});}}>{<Check width="w-4"/>}
                         </div>
                     </>
                 :
