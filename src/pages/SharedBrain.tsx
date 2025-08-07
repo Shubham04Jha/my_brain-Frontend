@@ -6,7 +6,7 @@ import { useSharedBrains } from "../hooks/useSharedBrains"
 import { BlurredForm } from "../components/ui/BlurredForm";
 import { Input } from "../components/ui/Input";
 import { Button } from "../components/ui/Button";
-import { baseUrl } from "../config";
+import { baseFrontEnd, baseUrl } from "../config";
 import { toast } from "react-toastify";
 import { Navigate, useNavigate } from "react-router-dom";
 
@@ -22,11 +22,11 @@ export const Form = ({closeFunction}: {closeFunction: ()=>void})=>{
                 toast.error('link field cannot be empty',{autoClose:2000});
                 return;
             }
-            if(!(link.startsWith(`${baseUrl}/share`))){
+            if(!(link.startsWith(`${baseFrontEnd}/shared`))){
                 toast.error('broken link',{autoClose:2000});
                 return;
             }
-            username = link.split(`/share`)[1];
+            username = link.split(`/shared/`)[1];
         }
         try {
             const response = await fetch(`${baseUrl}/sharedBrains`,{

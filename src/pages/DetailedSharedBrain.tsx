@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { baseUrl } from '../config';
-import { toast } from 'react-toastify';
-import { Home } from './Home';
 import {  Posts } from '../components/posts';
 import { type Post } from '../hooks/usePosts';
-import { BrainLogo } from '../assets/icons/logo';
+import { OpenBrainLogo } from '../components/ui/brainlogo';
 
 export const DetailedSharedBrain = () => {
   const { username } = useParams();
@@ -13,6 +11,7 @@ export const DetailedSharedBrain = () => {
   const [error,setError] = useState<string|null>(null);
   const [posts,setPosts] = useState<Post[]>([]);
   const [toggle,setToggle] = useState<boolean>();
+  const navigate = useNavigate();
   useEffect(()=>{
     const func = async ()=>{
         try {
@@ -57,9 +56,8 @@ export const DetailedSharedBrain = () => {
   }
   return (
     <>
-    <div className='absolute top-2 left-12 flex gap-2'>
-          <div className='w-8'>< BrainLogo /></div>
-          <p className='font-bold text-xl'>Open Brain</p> {/*logo */}
+    <div className='absolute top-2 left-12'>
+          <OpenBrainLogo />
     </div>
     <Posts posts={posts} loading={loading} error={error} refetch={()=>setToggle(b=>!b)} sideBarOpen={false} />
     </>

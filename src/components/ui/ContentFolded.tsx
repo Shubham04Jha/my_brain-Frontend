@@ -38,7 +38,12 @@ export const ContentFolded = ({link,type,tags,thoughts,title,username,isOwner,is
         const data = await setPublic(contentId,visible);
         setVisible(data);
     }
-    const handleOpen = ()=>navigate(`/content/${contentId}`);
+    const handleOpen = ()=>{
+        if(isOwner) navigate(`/content/${contentId}`);
+        else{
+            navigate('/share/content/'+contentId);
+        }
+    };
     return (
         <div className={`${defaultStyles} `}>
             {tags&&<div className="flex gap-2">{tags.map((tag,idx)=><p key={idx} className="dark:text-accent-black text-accent-white">#{tag}</p>)}</div>}

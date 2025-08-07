@@ -16,7 +16,7 @@ export interface Content{
     link: string;
 }
 
-export const useContent = (contentId: string)=>{
+export const useContent = (contentId: string,isOwner?: boolean)=>{
     const [toggle,setToggle] = useState<boolean>(false);
     const [data, setData] = useState<Content>();
     const [loading,setLoading] = useState<boolean>(false);
@@ -24,7 +24,12 @@ export const useContent = (contentId: string)=>{
         async function func(){
             try {
                 setLoading(true);
-                const response = await fetch(`${baseUrl}/shareContent/${contentId}`);
+                const response = await fetch(`${baseUrl}/${isOwner?'content':'shareContent'}/${contentId}`,{
+                    method:'get',
+                    headers:{
+                        'authorization': localStorage.getItem('token')||''
+                    }
+                });
                 const parsedResponse = await response.json();
                 setData(parsedResponse.content as Content);
             } catch (error) {

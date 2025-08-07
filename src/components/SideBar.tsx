@@ -1,11 +1,8 @@
 
 import { HomeIcon } from "../assets/icons/home";
 import { SharedBrainsIcon } from "../assets/icons/sharedBrains";
-import { ProfileIcon } from "../assets/icons/profile";
-import { ShareIcon } from "../assets/icons/share";
 import { SideBarButton } from "../assets/icons/sideBarButton";
 import { Button } from "./ui/Button";
-import { BrainLogo } from "../assets/icons/logo";
 import {LogoutLogo} from "../assets/icons/logout";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -14,6 +11,7 @@ import { CopyIcon } from "../assets/icons/copy";
 import { useEffect, useState } from "react";
 import { Eye } from "../assets/icons/eye";
 import { usePublicShareQuery } from "../hooks/usePublicShareQuery";
+import { OpenBrainLogo } from "./ui/brainlogo";
 
 
 interface SideBarProps{
@@ -124,9 +122,8 @@ export const SideBar = ({extended=true, onClick}:SideBarProps)=>{
     return(
         extended?
             <div className={`${outerStyle} `}>
-                <div className='absolute top-8 left-4 flex gap-2'>
-                    <div className='w-8'>< BrainLogo /></div>
-                    <p className='font-bold text-xl'>Open Brain</p>
+                <div className='absolute top-8 left-4 '>
+                    <OpenBrainLogo />
                 </div>
                 <div className="lg:static absolute w-full flex justify-center items-center h-2/3">
                     <div className="w-8 absolute dark:bg-background-black bg-background-white text-red-400

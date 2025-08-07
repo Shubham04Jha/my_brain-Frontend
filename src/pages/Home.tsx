@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { BrainLogo } from "../assets/icons/logo";
-import { PlusIcon } from "../assets/icons/plux";
 import { CreateContent } from "../components/createContent";
 import { Posts } from "../components/posts";
 import { SideBar } from "../components/SideBar";
 import { usePosts } from "../hooks/usePosts";
 import { AddContentButton } from "../components/ui/addContentButton";
+import { OpenBrainLogo } from "../components/ui/brainlogo";
 
 
 
@@ -20,9 +19,8 @@ export const Home = ({showAddContentButton}: HomeProps)=>{
   return(
     <>
       {!sideBarOpen&&
-        <div className='absolute top-2 left-12 flex gap-2'>
-          <div className='w-8'>< BrainLogo /></div>
-          <p className='font-bold text-xl'>Open Brain</p> {/*logo */}
+        <div className='absolute top-2 left-12'>
+          <OpenBrainLogo />
         </div>
       }
       <CreateContent refetch={refetch} creatingContent={creatingContent} setCreatingContent={setCreatingContent} />

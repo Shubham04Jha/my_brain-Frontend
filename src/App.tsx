@@ -10,7 +10,7 @@ import { Home } from './pages/Home';
 import { OpenBrainContext, OpenBrainProvider } from './context';
 import { SharedBrains } from './pages/SharedBrain';
 import { DetailedSharedBrain } from './pages/DetailedSharedBrain';
-import { ContentExpanded } from './components/ui/ContentExpanded';
+import { ContentExpanded, SharedContentExpanded } from './components/ui/ContentExpanded';
 
 const ProtectedRoute = ({isAuthenticated,isLoading}: {isAuthenticated: boolean,isLoading: boolean})=>{
   if (isLoading) {
@@ -81,10 +81,11 @@ function AppContent() {
         <Route path='login' element={<Login setIsAuthenticated={setIsAuthenticated}/>}/>
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} isLoading={isLoading} />}>
           <Route path='/' element={<Home showAddContentButton={true}/>}/>
+          <Route path='/content/:contentId' element={<ContentExpanded />} />
           <Route path='/shared' element={<SharedBrains />  } />
         </Route>
         <Route path='/shared/:username' element={<DetailedSharedBrain />  } />
-        <Route path='/content/:contentId' element={<ContentExpanded />} />
+        <Route path='/share/content/:contentId' element={<SharedContentExpanded />} />
         <Route path='*' element ={<PageNotFound/>}/>
       </Routes>
     </BrowserRouter>

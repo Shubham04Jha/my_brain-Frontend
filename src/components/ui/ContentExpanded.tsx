@@ -4,12 +4,13 @@ import { Edit } from "../../assets/icons/edit";
 import { Check } from "../../assets/icons/check";
 import { useParams } from "react-router-dom";
 import { useContent, type Content } from "../../hooks/useContent";
-import { BrainLogo } from "../../assets/icons/logo";
 import { LinkEmbed } from "../linkEmbed";
+import { useSetPublic } from "../../hooks/useSetPublic";
+import { OpenBrainLogo } from "./brainlogo";
 
 const defaultStyles = `dark:bg-background-black bg-background-white `
 
-export const ContentExpanded = ()=>{
+export const SharedContentExpanded = ()=>{
     const {contentId} = useParams();
     if(!contentId){
         return <BadUrl />;
@@ -18,9 +19,8 @@ export const ContentExpanded = ()=>{
     const {username} = userId||{};
     return(
         <>
-        <div className='absolute top-4 left-4 flex gap-2'>
-            <div className='w-8'>< BrainLogo /></div>
-            <p className='font-bold text-xl'>Open Brain</p>
+        <div className='absolute top-4 left-4'>
+            <OpenBrainLogo />
         </div>
         <div className={`flex items-center h-screen 
             ${defaultStyles}`}>
@@ -29,7 +29,33 @@ export const ContentExpanded = ()=>{
             relative
             custom-scrollbar
             ">
-                {loading?<Loading />:<Display isOwner={username==localStorage.getItem('username')} username={username} {...props}/>}
+                {loading?<Loading />:<Display contentId={contentId} isOwner={false} username={username} {...props}/>}
+            </div>
+        </div>
+        </>
+    )
+}
+
+export const ContentExpanded = ()=>{
+    const {contentId} = useParams();
+    if(!contentId){
+        return <BadUrl />;
+    }
+    const {loading,refetch,userId, ...props} = useContent(contentId,true);
+    const {username} = userId||{};
+    return(
+        <>
+        <div className='absolute top-4 left-4' >
+            <OpenBrainLogo />
+        </div>
+        <div className={`flex items-center h-screen 
+            ${defaultStyles}`}>
+            <div className="lg:h-[85vh] h-[80vh]   rounded-md p-4 outline-2 dark:outline-accent-black  outline-accent-black lg:w-2/3 
+            mx-auto 
+            relative
+            custom-scrollbar
+            ">
+                {loading?<Loading />:<Display contentId={contentId} isOwner={username==localStorage.getItem('username')} username={username} {...props}/>}
             </div>
         </div>
         </>
@@ -46,11 +72,12 @@ const BadUrl = ()=>{
 interface DisplayInterface
     {
     title: string, createdAt: number, isPublic: boolean,
-    tags?: string[], thoughts?: string,type: string, link: string 
+    tags?: string[], thoughts?: string,type: string, link: string ;
+    contentId: string;
     isOwner: boolean;
     username: string;
 }
-const Display = ({isOwner, title,createdAt,isPublic,tags, thoughts, type, link,username}: DisplayInterface)=>{
+const Display = ({isOwner, title,createdAt,isPublic,tags, thoughts, type, link,username, contentId}: DisplayInterface)=>{
     const [text,setText] = useState(thoughts);
     const [visible,setVisible] = useState(isPublic);
     const [editable,setEditable] = useState(false);
@@ -59,6 +86,12 @@ const Display = ({isOwner, title,createdAt,isPublic,tags, thoughts, type, link,u
     const date = new Date(createdAt).toDateString()||'';
     const titleRef = useRef<HTMLInputElement>(null);
     const thoughtsRef = useRef<HTMLTextAreaElement>(null);
+
+    const {setPublic} = useSetPublic();
+    const handleVisible = async ()=>{
+        const data = await setPublic(contentId,visible);
+        setVisible(data);
+    }
     useEffect(()=>{
        if(editTitle) titleRef.current?.focus();
     },[editTitle]);
@@ -106,7 +139,7 @@ const Display = ({isOwner, title,createdAt,isPublic,tags, thoughts, type, link,u
                 }
             <div className="flex justify-between">
                 <p>Added by: {username}</p>
-                {isOwner&&<div><p>{visible?'eye':'no eye'}  {isPublic?'public':'private'}</p></div>}
+                {isOwner&&<div className="flex gap-2 hover:cursor-pointer" onClick={handleVisible}><div className="w-6"><Eye isPublic={visible} /></div><p>{visible?'public':'private'}</p></div>}
             </div>
             <p>Created: {date}</p>
             <div className="mx-auto p-2 lg:w-1/2">
