@@ -35,7 +35,7 @@ const checkAuthentication = async(setUsername: (x: string)=>void, username: stri
       }
     })
     if(!(response.status==200)){
-      console.error(response.status==404?'Username not found':'Token invalid');
+      console.error(response.status==404?`Username: ${username} not found`:'Token invalid');
       return false;
     }
     const data = await response.json();
@@ -116,15 +116,6 @@ function App(){
             />
     </div>
   )
-}
-
-const garbage = ()=>{
-      {/* <ProfileCard variant='extended' username={'shubham@123'}/> */}
-      {/* <ResponsiveButton text="Share Brain" size='md' padding='px-4 py-2' startIcon={shareSvg}/> */}
-      {/* <ContentExpanded tags={['politics','entertainment']} title={`First Content`} link='https://www.google.com' 
-      type='website' createdAt={Date.now()} username='shubham@123' thoughts='some thoughts I have for this test...'
-      isPublic isOwner
-      /> */}
 }
 
 export default App

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import type { Post } from "./usePosts";
 import { baseUrl } from "../config";
 
 export interface Content{

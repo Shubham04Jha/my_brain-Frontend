@@ -3,7 +3,6 @@ import {type Post } from "../hooks/usePosts";
 import { SearchBar } from "./SearchBar";
 import { ContentFolded } from "./ui/ContentFolded";
 import { OpenBrainContext } from "../context";
-import { useNavigate } from "react-router-dom";
 
 
 interface PostsProps{

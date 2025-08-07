@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import { baseUrl } from '../config';
 import {  Posts } from '../components/posts';
 import { type Post } from '../hooks/usePosts';
@@ -11,7 +11,6 @@ export const DetailedSharedBrain = () => {
   const [error,setError] = useState<string|null>(null);
   const [posts,setPosts] = useState<Post[]>([]);
   const [toggle,setToggle] = useState<boolean>();
-  const navigate = useNavigate();
   useEffect(()=>{
     const func = async ()=>{
         try {

@@ -107,12 +107,12 @@ const Display = ({isOwner, title,createdAt,isPublic,tags, thoughts, type, link,u
         <>
         <div className="w-full px-4">
             {tags&&<div className="flex gap-2">
-                {tags.map((val,idx)=>val)}
+                {tags.map((val,idx)=><p key={idx}>{val}</p>)}
             </div>}
             {editTitle?
-                <div className="flex justify-between">
-                    <div>
-                        <input className="mb-8
+                <div className="flex justify-between gap-4 mb-8">
+                    <div className="w-full ">
+                        <input className=" w-full
                         focus:outline-1
                         hover:cursor-pointer text-2xl dark:outline-accent-black outline-accent-white rounded-md items-center " type="text" value={titleText} 
                         onChange={(e) =>{ setTitle(e.target.value);}}
@@ -120,7 +120,7 @@ const Display = ({isOwner, title,createdAt,isPublic,tags, thoughts, type, link,u
                     </div>
                     <div className="outline-1 dark:outline-accent-black outline-accent-white p-2 rounded-md inline-flex ml-auto
                         hover:cursor-pointer h-10
-                        aspect-square "
+                        aspect-square -mt-1"
                         onClick={()=>{setEditTitle(false);}}>{<Check width="w-6"/>}
                     </div>
                 </div>
@@ -132,7 +132,7 @@ const Display = ({isOwner, title,createdAt,isPublic,tags, thoughts, type, link,u
                     {isOwner&&
                     <div className="h-10 outline-1 dark:outline-accent-black outline-accent-white p-2 rounded-md inline-flex ml-auto
                         hover:cursor-pointer
-                        aspect-square"
+                        aspect-square -mt-1"
                         onClick={()=>setEditTitle(true)}>{<Edit width="w-6"/>}
                     </div>}
                 </div>
