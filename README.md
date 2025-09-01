@@ -1,3 +1,6 @@
+## Backend Link: 
+https://github.com/Shubham04Jha/my_brain-backend
+
 # todos\
 - gpt querying and simple answers as to what I think about it based on the contents that is available.
 - vector database searching.
