@@ -64,7 +64,7 @@ export const usePosts = (username?: string): {posts: Post[],loading: boolean, er
     }
 } 
 
-export const usePOsts= async()=>{
+const usePOsts= async()=>{
     const [posts,setPosts] = useState([]);
     try {
         const response = await fetch(`${baseUrl}/contents`,{

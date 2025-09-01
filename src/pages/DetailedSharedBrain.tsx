@@ -15,7 +15,7 @@ export const DetailedSharedBrain = () => {
     const func = async ()=>{
         try {
             setLoading(true);
-            const response = await fetch(`${baseUrl}/share/${username}`);
+            const response = await fetch(`${baseUrl}/user/share/${username}`);
             if(!response.ok){
                 if(response.status==403){
                     setError('User has not allowed sharing their brain');

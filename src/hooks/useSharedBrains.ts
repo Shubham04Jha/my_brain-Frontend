@@ -10,7 +10,7 @@ export const useSharedBrains = ()=>{
         const getUsers = async(): Promise<void> =>{
             try {
                 setLoading(true);
-                const response = await fetch(`${baseUrl}/sharedBrains`,{
+                const response = await fetch(`${baseUrl}/user/sharedBrains`,{
                     method: 'get',
                     headers:{
                         'authorization':localStorage.getItem('token')||'',

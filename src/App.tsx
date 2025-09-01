@@ -24,7 +24,7 @@ const ProtectedRoute = ({isAuthenticated,isLoading}: {isAuthenticated: boolean,i
 
 const checkAuthentication = async(setUsername: (x: string)=>void, username: string): Promise<boolean> =>{''
   const token = localStorage.getItem('token');
-  const url = baseUrl+'/isAuthenticated';
+  const url = baseUrl+'/user/isAuthenticated';
   if(!token) return false;
   try {
     const response = await fetch(url,{

@@ -13,7 +13,7 @@ export const usePublicShareQuery = ()=>{
                 setStatusLoading(true);
                 const username = localStorage.getItem('username');
                 if(!username) return;
-                const response = await fetch(`${baseUrl}/checkPublicStatus/${username}`);
+                const response = await fetch(`${baseUrl}/user/checkPublicStatus/${username}`);
                 if(!response.ok){
                     setPublicShare(false);
                     setStatusLoading(false);

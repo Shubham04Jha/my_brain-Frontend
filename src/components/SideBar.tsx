@@ -52,7 +52,7 @@ const Options = ()=>{
         if(loading) return;
         try {
             setLoading(true);
-            const response = await fetch(`${baseUrl}/share`,{
+            const response = await fetch(`${baseUrl}/user/share`,{
                 method: 'post',
                 headers:{
                     'content-type':'application/json',

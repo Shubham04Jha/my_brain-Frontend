@@ -23,7 +23,7 @@ export const useContent = (contentId: string,isOwner?: boolean)=>{
         async function func(){
             try {
                 setLoading(true);
-                const response = await fetch(`${baseUrl}/${isOwner?'content':'shareContent'}/${contentId}`,{
+                const response = await fetch(`${baseUrl}/content${isOwner?'/detail':'/shareContent'}/${contentId}`,{
                     method:'get',
                     headers:{
                         'authorization': localStorage.getItem('token')||''

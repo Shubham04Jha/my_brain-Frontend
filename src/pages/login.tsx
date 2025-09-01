@@ -20,7 +20,7 @@ export const Login: React.FC<LoginProps> = ({setIsAuthenticated})=>{
     const passwordRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
     const handleLogin = async (endpoint: 'signup'|'signin'): Promise<void> =>{
-        const url = baseUrl+'/'+ endpoint;
+        const url = baseUrl+'/user/'+ endpoint;
         const data = {
             username: usernameRef.current?.value,
             password: passwordRef.current?.value

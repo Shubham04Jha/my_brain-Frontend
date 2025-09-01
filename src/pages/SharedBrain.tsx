@@ -30,7 +30,7 @@ export const Form = ({closeFunction}: {closeFunction: ()=>void})=>{
             username = link.split(`/shared/`)[1];
         }
         try {
-            const response = await fetch(`${baseUrl}/sharedBrains`,{
+            const response = await fetch(`${baseUrl}/user/sharedBrains`,{
                 method:'post',
                 headers:{
                     'content-type': 'application/json',
