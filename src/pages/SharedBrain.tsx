@@ -8,7 +8,7 @@ import { Input } from "../components/ui/Input";
 import { Button } from "../components/ui/Button";
 import { baseFrontEnd, baseUrl } from "../config";
 import { toast } from "react-toastify";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { OpenBrainLogo } from "../components/ui/brainlogo";
 
 export const Form = ({closeFunction}: {closeFunction: ()=>void})=>{
