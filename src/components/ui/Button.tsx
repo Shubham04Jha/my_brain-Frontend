@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Loader } from "../../assets/icons/loading";
 
 const variants = {
     primary:'',
@@ -70,12 +71,19 @@ export const Button = ({
             font-semibold
             hover-ring-border-subtle 
             flex justify-start px-1 gap-1 items-center pb-1`}>
-                {startIcon&&
-                    <div className={`${iconContainerStyle} `}>
-                        {startIcon}
-                    </div>
+                {isLoading?
+                        <div className="w-6 flex justify-center items-center">
+                            <Loader />
+                        </div>
+                    :
+                    <>
+                    {startIcon&&
+                        <div className={`${iconContainerStyle} `}>
+                            {startIcon}
+                        </div>}
+                        {text}
+                    </>
                 }
-                {text}
         </button>
         :
         <button

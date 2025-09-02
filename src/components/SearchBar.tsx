@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import type { Post } from "../hooks/usePosts";
 import { Link } from "react-router-dom";
 import { useDebounce } from "../hooks/useDebounce";
+import { Button } from "./ui/Button";
+import { GraduateCap } from "../assets/icons/graduateCap";
 
 const positioning = `left-64 sm:right-8 right-2`
 const placeholder = 'search'
@@ -27,17 +29,20 @@ export const SearchBar = ()=>{
     const inputRef = useRef<HTMLInputElement|null>(null);
     const {elementRef,doFocus} = useFocus();
     const [searchResults,setSearchResults] = useState<Post[]>([]);
+    const [loading,setLoading] = useState<boolean>(false);
     const handleVectorSearch = async ()=>{
         const searchText = inputRef.current?.value;
-        if (!searchText?.trim()) {
+        if (!(searchText?.trim())) {
             setSearchResults([]);
             return;
         }
+        setLoading(true);
         try {
             const response = await fetch(baseUrl+'/content/search/vectorSearch',{
                 method:'post',
                 headers:{
-                    "authorization":localStorage.getItem("token")||" "
+                    "authorization":localStorage.getItem("token")||" ",
+                    "content-type":"application/json"
                 },
                 body: JSON.stringify({
                     query: searchText
@@ -54,7 +59,7 @@ export const SearchBar = ()=>{
             else console.log("error Occured");
             toast.error("An error occured",{autoClose:1500});
         }
-
+        setLoading(false);
     }
     const handleSearch = useCallback(async ()=>{
         const searchText = inputRef.current?.value;
@@ -101,6 +106,9 @@ export const SearchBar = ()=>{
                         className="flex-1 bg-transparent text-sm placeholder-gray-400 focus:outline-none items-center -mt-1 ml-4 w-full"
                         placeholder={placeholder}
                     />
+                    <Button variant="regular" additionalStyles="border-1 dark:border-white" 
+                    startIcon={<GraduateCap />} iconContainerStyle="w-6" text="Smart Search"
+                    onClick={handleVectorSearch} isDisable={loading} isLoading={loading} />
                 </div>
             </div>
             {searchResults.length>0&&<ShowResults searchResults={searchResults} />}
